@@ -1,0 +1,5 @@
+AOX;\data\;AOX990;Rot. de Integ. x Alias x Campo;Rut. Integ. vs Alias vs Campo;Integ. Rot x Alias x Field;;C;C;C;0;;AOX_FILIAL+AOX_CODAGR+AOX_NIVAGR+AOX_ROTINA+AOX_ALIAS+AOX_CAMPO;S;73;;;;1;2;2;0;0;0
+PO1;\data\;PO1990;CRM - Regras Propostas;CRM - Regras Propostas;CRM - Regras Propostas;;C;C;C;0;;;;0;;;;;;;0;0;0
+PO2;\data\;PO2990;CRM - Regras x Aprovadores;CRM - Regras x Aprovadores;CRM - Regras x Aprovadores;;C;C;C;0;;;;0;;;;;;;0;0;0
+ZRM;;ZRM990;APROVAÇÕES – FLUIG;APROVAÇÕES – FLUIG;APROVAÇÕES – FLUIG;;C;C;C;0;;ZRM_FILIAL+ZRM_IDPROC;;0;;;;;;;0;0;0
+ZXS;;ZXS990;APROVADORES – APROVAÇÕES FLUIG;APROVADORES – APROVAÇÕES FLUIG;APROVADORES – APROVAÇÕES FLUIG;;C;C;C;0;;ZXS_FILIAL+ZXS_IDPROC+ZXS_TPAPRO+ZXS_ITEM+ZXS_SEQ;;0;;;;;;;0;0;0

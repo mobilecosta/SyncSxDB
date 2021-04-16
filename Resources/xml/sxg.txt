@@ -1,0 +1,2 @@
+094;Id de Controle dos doc.fiscais;Id de Control dos doc.fiscales;Control ID of invoices;14;3;3;!!!;5c44f709f7456fd93fc81b839b66c728;
+095;Série dos documentos fiscais;Serie de documentos fiscales;Invoice series;3;3;3;!!!;1095f69d8cc52713e09d9bb20c580498;

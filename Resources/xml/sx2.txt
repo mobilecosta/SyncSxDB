@@ -1,0 +1,2 @@
+SDS;;SDS990;Cabeçalho importação XML NF-e;Encabez importacion XML e-Fact;XML INv-e Import Header;;E;E;E;0;;DS_FILIAL+DS_CHAVENF;S;2;;;;1;2;2;0;0;0
+SDT;;SDT990;Itens importação XML NF-e;Items importacion XML e-Fact;Inv-e XML Import Items;;E;E;E;0;;DT_FILIAL+DT_DOC+DT_SERIE+DT_FORNEC+DT_LOJA+DT_ITEM;S;2;;;;1;2;2;0;0;0

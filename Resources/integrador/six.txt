@@ -1,0 +1,11 @@
+PMV;1;PMV_FILIAL+PMV_CINTEG+PMV_ALIAS+PMV_IDESTR;Cod Integrac + Tabela + ID Sist Inte + Fil. Sistema;Cod Integrac + Tabela + ID Sist Inte + Fil. Sistema;Cod Integrac + Tabela + ID Sist Inte + Fil. Sistema;U;;;S;;
+PMV;2;PMV_FILIAL+PMV_CINTEG+PMV_ALIAS+PMV_FLTAB+PMV_CHAVE;Cod Integrac + Tabela + Chave Full + Fil.Cadastro;Cod Integrac + Tabela + Chave Full + Fil.Cadastro;Cod Integrac + Tabela + Chave Full + Fil.Cadastro;U;;;S;;
+PN1;1;PN1_FILIAL+PN1_CINTEG+PN1_ALIAS+PN1_FLTAB+PN1_CHAVE+PN1_TPEXIM+PN1_STATUS;Cod Integrac + Tabela + Filial + Chave + Tipo + Status;Cod Integrac + Tabela + Chave Full + Fil.Cadastro + Tp Exp/Imp + Statu;Cod Integrac + Tabela + Chave Full + Fil.Cadastro + Tp Exp/Imp + Statu;U;;;S;;
+PN1;2;PN1_FILIAL+PN1_ALIAS+DTOS(PN1_DTMNT)+PN1_HRMNT+PN1_CHAVE;Tabela+Data e Hora Manutencao+Chave;Tabela+Tp Exp/Imp+Chave Full+Dt Mnt Cadas+Hr Mnt Cadas+Chave;Tabela+Tp Exp/Imp+Chave Full+Dt Mnt Cadas+Hr Mnt Cadas+Chave;U;;;N;;
+PN2;1;PN2_FILIAL+PN2_CINTEG;Cod Emp Inte;Cod Emp Inte;Cod Emp Inte;U;;;S;;
+PN4;1;PN4_FILIAL+PN4_CINTEG+PN4_PROCES+PN4_TPMETO;Cod Emp Intg+Processo+Tipo Metodo;Cod Emp Intg+Processo+Tipo Metodo;Cod Emp Intg+Processo+Tipo Metodo;U;;;S;;
+PN4;2;PN4_FILIAL+PN4_CINTEG+PN4_TPMETO+PN4_PROCES;Cod Emp Intg+Tipo Metodo+Processo;Cod Emp Intg+Tipo Metodo+Processo;Cod Emp Intg+Tipo Metodo+Processo;U;;;S;;
+PNE;1;PNE_FILIAL+PNE_CINTEG+PNE_PROCES+PNE_ORDEM;Integracao+Processo+Formulario+Ordem;Integracao+Processo+Formulario+Ordem;Integracao+Processo+Formulario+Ordem;U;;;S;;
+PNM;1;PNM_FILIAL+PNM_CODIGO;Codigo;Codigo;Codigo;U;;;S;;
+PNM;2;PNM_FILIAL+PNM_CINTEG+PNM_ROTINA+PNM_AMBIEN+PNM_STATUS;Cd Adquirida+Rotina Job+Ambiente Exc+Status;Cd Adquirida+Rotina Job+Ambiente Exc+Status;Cd Adquirida+Rotina Job+Ambiente Exc+Status;U;;;S;;
+PNM;3;PNM_FILIAL+PNM_AMBIEN+PNM_STATUS+PNM_ROTINA+PNM_CINTEG;Ambiente Exc+Status+Rotina Job+Cd Adquirida;Ambiente Exc+Status+Rotina Job+Cd Adquirida;Ambiente Exc+Status+Rotina Job+Cd Adquirida;U;;;S;;

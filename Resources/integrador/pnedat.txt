@@ -1,0 +1,59 @@
+000001;000001;01;;CTZSB1;02;B1_DESC;name;;;
+000001;000001;01;;CTZSB1;03;B1_PRV1;value;;;
+000001;000001;01;;CTZSB1;04;B1_CUSTD;cost;;;
+000001;000001;01;;CTZSB1;05;B1_CODBAR;barcode;;;
+000001;000001;01;;CTZSB1;06;B2_QATU;available_stock;;;
+000001;000001;01;;CTZSB1;07;B1_POSIPI;ncm_code;;;
+000001;000001;01;;CTZSB1;08;B1_PESBRU;gross_weigth;;;
+000001;000001;01;;CTZSB1;09;B1_PESO;net_weigth;;;
+000001;000002;01;;CTZSB1;02;B1_DESC;name;;;
+000001;000002;01;;CTZSB1;03;B1_PRV1;value;;;
+000001;000002;01;;CTZSB1;04;B1_CUSTD;cost;;;
+000001;000002;01;;CTZSB1;05;B1_CODBAR;barcode;;;
+000001;000002;01;;CTZSB1;06;B2_QATU;available_stock;;;
+000001;000002;01;;CTZSB1;07;B1_POSIPI;ncm_code;;;
+000001;000002;01;;CTZSB1;08;B1_PESBRU;gross_weigth;;;
+000001;000002;01;;CTZSB1;09;B1_PESO;net_weigth;;;
+000001;000004;01;;CTZSRV;01;B1_DESC;name;;;
+000001;000004;01;;CTZSRV;02;B1_PRV1;value;;;
+000001;000004;01;;CTZSRV;03;B1_CUSTD;cost;;;
+000001;000007;01;;CTZSA1;01;A1_NREDUZ;name;;;
+000001;000007;01;;CTZSA1;02;A1_NOME;company_name;;;
+000001;000007;01;;CTZSA1;03;A1_EMAIL;email;;;
+000001;000007;01;;CTZSA1;04;A1_TEL;business_phone;;;
+000001;000007;01;;CTZSA1;05;A1_FAX;mobile_phone;;;
+000001;000007;01;;CTZSA1;06;A1_PESSOA;person_type;;;
+000001;000007;01;;CTZSA1;07;A1_CGC;document;;;
+000001;000007;01;;CTZSA1;08;A1_INSCR;state_registration_number;;;
+000001;000007;01;;CTZSA1;10;A1_TP_INSC;state_registration_type;;;
+000001;000007;01;;CTZSA1;11;;date_of_birth;;;<ADVPL>If(! Empty((aQuery[4][2]:Alias())->A1_DTNASC), AllTrim(Str(Year((aQuery[4][2]:Alias())->A1_DTNASC))) + "-" + StrZero(Month((aQuery[4][2]:Alias())->A1_DTNASC), 2) + "-" + StrZero(Day((aQuery[4][2]:Alias())->A1_DTNASC), 2) + 'T08:00:00.000-00', '')</ADVPL>
+000001;000007;01;;CTZSA1;12;A1_VM_OBS;notes;;;
+000001;000007;01;contacts;AC8SA1;16;U5_CONTAT;name;CTZSA1;;
+000001;000007;01;contacts;AC8SA1;17;U5_EMAIL;email;CTZSA1;;
+000001;000007;01;contacts;AC8SA1;18;U5_FONE;business_phone;CTZSA1;;
+000001;000007;01;contacts;AC8SA1;19;UM_DESC;job_title;CTZSA1;;
+000001;000007;01;address;CTZSA1;21;A1_CEP;zip_code;;;
+000001;000007;01;address;CTZSA1;22;;street;;;<ADVPL>FisGetEnd((oCQuery:Alias())->A1_END, (oCQuery:Alias())->A1_EST)[1]</ADVPL>
+000001;000007;01;address;CTZSA1;23;;number;;;<ADVPL>FisGetEnd((oCQuery:Alias())->A1_END, (oCQuery:Alias())->A1_EST)[3]</ADVPL>
+000001;000007;01;address;CTZSA1;24;A1_COMPLEM;complement;;;
+000001;000007;01;address;CTZSA1;25;A1_BAIRRO;neighborhood;;;
+000001;000010;01;;CTZSF2;01;F2_DOC;number;;;
+000001;000010;01;;CTZSF2;02;;emission;;;<ADVPL>If(! Empty((oCQuery:Alias())->F2_EMISSAO), AllTrim(Str(Year((oCQuery:Alias())->F2_EMISSAO))) + "-" + StrZero(Month((oCQuery:Alias())->F2_EMISSAO), 2) + "-" + StrZero(Day((oCQuery:Alias())->F2_EMISSAO), 2) + 'T08:00:00.000-00Z', '')</ADVPL>
+000001;000010;01;;CTZSF2;03;;status;;;<ADVPL>"COMMITTED"</ADVPL>
+000001;000010;01;;CTZSF2;04;PMV_IDCLI;customer_id;;;
+000001;000010;01;products;CTZSIP;05;B1_DESC;description;CTZSF2;;
+000001;000010;01;products;CTZSIP;06;D2_QUANT;quantity;CTZSF2;;
+000001;000010;01;products;CTZSIP;07;PMV_IDESTR;product_id;CTZSF2;;
+000001;000010;01;products;CTZSIP;08;D2_TOTAL;value;CTZSF2;;
+000001;000010;01;services;CTZSIS;09;B1_DESC;description;CTZSF2;;
+000001;000010;01;services;CTZSIS;10;D2_QUANT;quantity;CTZSF2;;
+000001;000010;01;services;CTZSIS;11;PMV_IDESTR;service_id;CTZSF2;;
+000001;000010;01;services;CTZSIS;12;D2_TOTAL;value;CTZSF2;;
+000001;000010;01;discount;CTZSF2;13;;measure_unit;;;<ADVPL>"VALUE"</ADVPL>
+000001;000010;01;discount;CTZSF2;14;;rate;;;<ADVPL>"0"</ADVPL>
+000001;000010;01;payment;CTZSF2;15;;type;;;<ADVPL>"CASH"</ADVPL>
+000001;000010;01;installments;CTZSE1;16;E1_PARCELA;number;CTZSF2;payment;
+000001;000010;01;installments;CTZSE1;17;E1_VALOR;value;CTZSF2;payment;
+000001;000010;01;installments;CTZSE1;18;;due_date;CTZSF2;payment;<ADVPL>If(! Empty((aQuery[4][2]:Alias())->E1_VENCREA), AllTrim(Str(Year((aQuery[4][2]:Alias())->E1_VENCREA))) + "-" + StrZero(Month((aQuery[4][2]:Alias())->E1_VENCREA), 2) + "-" + StrZero(Day((aQuery[4][2]:Alias())->E1_VENCREA), 2) + 'T08:00:00.000-00', '')</ADVPL>
+000001;000010;01;installments;CTZSE1;19;;status;CTZSF2;payment;<ADVPL>"PENDING"</ADVPL>
+000001;000010;01;;CTZSF2;20;F2_FRETE;shipping_cost;;;

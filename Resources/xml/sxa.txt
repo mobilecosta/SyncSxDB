@@ -1,0 +1,2 @@
+SDS;1;Dados NF;Dados NF;Dados NF;U;;
+SDS;2;Dados Importacao;Dados Importacao;Dados Importacao;U;;

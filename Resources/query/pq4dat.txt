@@ -1,0 +1,125 @@
+AFA;01;I_AFA_PROJET;Projeto Inicial;1;10;0;;;AF8;;N;N;;
+AFA;02;F_AFA_PROJET;Projeto Final;1;10;0;;;AF8;;N;N;;
+AFASD2;01;I_D2_EMISSAO;Emissao Inicial;4;8;0;;;;;N;N;;
+AFASD2;02;F_D2_EMISSAO;Emissao Final;4;8;0;;;;;N;N;;
+CB7;01;I_C5_EMISSAO;Periodo Inicial;4;8;0;;;;;N;N;;
+CB7;02;F_C5_EMISSAO;Periodo Final;4;8;0;;;;;N;N;;
+CB7DET;01;I_C5_EMISSAO;Periodo Inicial;4;8;0;@D;;;;N;N;;
+CB7DET;02;F_C5_EMISSAO;Periodo Final;4;8;0;@D;;;;N;N;;
+CTZSA1;01;OPERACAO;Operacao;1;1;0;;"1";;1=INCLUSAO;2=ALTERACAO;3=EXCLUSAO;4=AMBOS;N;N;;Define o tipo de operacao a ser selecionada para envio dos clientes para integracao com o Conta Azul
+CTZSB1;01;OPERACAO;Operacao;1;1;0;;"1";;1=INCLUSAO;2=ALTERACAO;3=EXCLUSAO;4=AMBOS;N;N;;Define o tipo de operacao a ser selecionada para envio dos produtos para integracao com o Conta Azul
+CTZSF2;01;OPERACAO;Operacao;1;1;0;;"1";;1=INCLUSAO;2=ALTERACAO;3=EXCLUSAO;4=AMBOS;N;N;;Define o tipo de operacao a ser selecionada para envio das vendas para integracao com o Conta Azul
+CTZSRV;01;OPERACAO;Operacao;1;1;0;;"1";;1=INCLUSAO;2=ALTERACAO;3=EXCLUSAO;4=AMBOS;N;N;;Define o tipo de operacao a ser selecionada para envio dos servicos para integracao com o Conta Azul
+ESTFEC;01;DQ_DATA;Data Fechamento;4;8;0;;GETMV("MV_ULMES");;;N;N;;
+ESTFEC;02;DQ_STATUS;Situacao;1;1;0;;;;1=DIFERENCA;2=BATIDO;3=AMBOS;N;N;;
+FINCT2;01;DE_INICIAL;Data Emissao Inicial;4;8;0;;;;;N;N;;
+FINCT2;02;DE_FINAL;Data Emissao Final;4;8;0;;;;;N;N;;
+FINCT2;03;FO_INICIAL;Fornecedor Inicial;1;6;0;@!;;SA2;;N;N;;
+FINCT2;04;LO_INICIAL;Loja Inicial;1;2;0;@!;;;;N;N;;
+FINCT2;05;FO_FINAL;Fornecedor Final;1;6;0;@!;;SA2;;N;N;;
+FINCT2;06;LO_FINAL;Loja Final;1;2;0;@!;;;;N;N;;
+FINCT2;07;CC_INICIAL;Centro de Custo Inicial;1;9;0;;;CTT;;N;N;;
+FINCT2;08;CC_FINAL;Centro de Custo Final;1;9;0;;;CTT;;N;N;;
+MONEXP;01;I_C5_NUM;Pedido Inicial;1;6;0;;;;;N;N;;Pedido Inicial
+MONEXP;02;F_C5_NUM;Pedido Final;1;6;0;;;;;N;N;;Pedido Final
+MONEXP;03;I_C5_NOTA;Nota Inicial;1;9;0;;;;;N;N;;
+MONEXP;04;F_C5_NOTA;Nota Final;1;9;0;;;;;N;N;;
+MONEXP;05;I_C5_FECENT;Data Entrega Inicial;4;8;0;;;;;N;N;;
+MONEXP;06;F_C5_FECENT;Data Entrega Final;4;8;0;;;;;N;N;;
+MONEXP;07;T_ITENS;Exibir Itens;1;1;0;;"2";;1=FALTANTES;2=TODOS;N;N;;
+MONEXP;08;RECALCULA;Recalcula Sld Disponivel;1;1;0;;"2";;1=SIM;2=NAO;N;N;;
+POMSF2;01;F2_SERIE;Serie;1;3;0;;;01;;N;S;;
+POMSF2;02;I_F2_EMISSAO;Emissao Inicial;4;8;0;;DDATABASE;;;N;S;;
+POMSF2;03;F_F2_EMISSAO;Emissao Final;4;8;0;;DDATABASE;;;N;S;;
+SB6;01;I_B6_CLIENTE;Cliente Inicial;1;6;0;@!;;SA1;;N;N;;
+SB6;02;I_B6_LOJAC;Loja Inicial;1;2;0;@!;;;;N;N;;
+SB6;03;I_B6_FORNECE;Fornecedor Inicial;1;6;0;@!;;SA2;;N;N;;
+SB6;04;I_B6_LOJAF;Loja Inicial;1;2;0;@!;;;;N;N;;
+SB6;05;I_B6_PRODUTO;Produto Inicial;1;15;0;@!;;SB1;;N;N;;
+SB6;06;I_B6_LOCAL;Armazem Inicial;1;2;0;@!;;;;N;N;;
+SB6;07;F_B6_CLIENTE;Cliente Final;1;6;0;@!;;SA1;;N;N;;
+SB6;08;F_B6_LOJAC;Loja Final;1;2;0;@!;;;;N;N;;
+SB6;09;F_B6_FORNECE;Fornecedor Final;1;6;0;@!;;SA2;;N;N;;
+SB6;10;F_B6_LOJAF;Loja Final;1;2;0;@!;;;;N;N;;
+SB6;11;F_B6_PRODUTO;Produto Final;1;15;0;@!;;SB1;;N;N;;
+SB6;12;F_B6_LOCAL;Armazem Final;1;2;0;@!;;;;N;N;;
+SB6;13;B6_BAIXADOS;Apresenta Baixados ?;1;1;0;;;;1=SIM;2=NAO;N;N;;
+SB6;14;B6_TABLE;Entrada/Saida/Ambos;1;1;0;;;;1=ENTRADAS;2=SAIDAS;3=AMBOS;N;N;;
+SBF;01;I_BF_PRODUTO;Produto Inicial;1;15;0;;;SB1;;N;N;;
+SBF;02;F_BF_PRODUTO;Produto Final;1;15;0;;;SB1;;N;N;;
+SBF;03;I_BF_LOCAL;Local Inicial;1;2;0;;;;;N;N;;
+SBF;04;F_BF_LOCAL;Local Final;1;2;0;;;;;N;N;;
+SBF;05;I_B1_TIPO;Tipo Inicial;1;2;0;;;02;;N;N;;
+SBF;06;F_B1_TIPO;Tipo Final;1;2;0;;;02;;N;N;;
+SC2;01;I_C2_EMISSAO;Dt Emissao Inicial;4;8;0;@D;;;;N;N;;
+SC2;02;F_C2_EMISSAO;Dt Emissao Final;4;8;0;@D;;;;N;N;;
+SC2;03;I_C2_NUM;OP Inicial;1;6;0;@9;;;;N;N;;
+SC2;04;F_C2_NUM;OP Final;1;6;0;@9;;;;N;N;;
+SC2;05;I_C2_PRODUTO;Produto Inicial;1;15;0;@!;;;;N;N;;
+SC2;06;F_C2_PRODUTO;Produto Final;1;15;0;@!;;;;N;N;;
+SC5FAT;01;PEDIDO;Pedido de Venda;1;6;0;;;SC5;;N;N;;Número do pedido de Vendas
+SC6SBF;01;I_C6_NUM;Pedido Inicial;1;6;0;;;SC6;;N;N;;
+SC6SBF;02;F_C6_NUM;Pedido Final;1;6;0;;;SC6;;N;N;;
+SE1AGG;01;DE_INICIAL;Data Emissao Inicial;4;8;0;;;;;N;N;;
+SE1AGG;02;DE_FINAL;Data Emissao Final;4;8;0;;;;;N;N;;
+SE2;01;I_E2_DIGIT;Digitacao Inicial;4;8;0;;;;;N;N;;
+SE2;02;F_E2_DIGIT;Digitacao Final;4;8;0;;;;;N;N;;
+SE2;03;I_E2_EMIS;Emissao Inicial;4;8;0;;;;;N;N;;
+SE2;04;F_E2_EMIS;Emissao Final;4;8;0;;;;;N;N;;
+SE2;05;I_E2_VENCTO;Vencto Inicial;4;8;0;;;;;N;N;;
+SE2;06;F_E2_VENCTO;Vencto Final;4;8;0;;;;;N;N;;
+SE2;07;P_CTB;Situacao Contabilizacao;1;1;0;;"2";;0=DIFERENCAS;1=CONTABILIZACAO OK;2=AMBOS;N;N;;
+SE2AGG;01;DE_INICIAL;Data Emissao Inicial;4;8;0;;;;;N;N;;
+SE2AGG;02;DE_FINAL;Data Emissao Final;4;8;0;;;;;N;N;;
+SE5;01;I_E5_DTDIGIT;Data Digitacao Inicial;4;8;0;;;;;N;N;;
+SE5;02;F_E5_DTDIGIT;Data Digitacao Final;4;8;0;;;;;N;N;;
+SE5;03;P_E5_RECPAG;Tipo;1;1;0;;;;P=PAGAR;R=RECEBER;A=AMBOS;N;N;;
+SE5;04;P_E5_XCNF;Conferencia Documento;1;1;0;;;;0=PENDENTE;1=INCONSISTENCIA;2=CONFERIDO;3=TODOS;N;N;;
+SE5;05;P_CTB;Conferencia Contabil;1;1;0;;;;0=DIFERENCAS;1=CONTABILIZACAO OK;2=AMBOS;N;N;;
+SERVIC;01;SERIE;Serie;1;3;0;;;01;;N;N;;Serie a ser importada na base de integracao
+SF1;01;I_F1_DTDIGIT;Digitacao Inicial;4;8;0;;;;;N;N;;
+SF1;02;F_F1_DTDIGIT;Digitacao Final;4;8;0;;;;;N;N;;
+SF1;03;I_F1_EMISSAO;Emissao Inicial;4;8;0;;;;;N;N;;
+SF1;04;F_F1_EMISSAO;Emissao Final;4;8;0;;;;;N;N;;
+SF1;05;P_F1_XFSC;Conferencia Fiscal;1;1;0;;"3";;0=PENDENTE;1=INCONSISTENCIA;2=CONFERIDO;3=TODOS;N;N;;
+SF1;06;P_F1_XCTB;Conferencia Contabil;1;1;0;;"3";;0=PENDENTE;1=INCONSISTENCIA;2=CONFERIDO;3=TODOS;N;N;;
+SF1;07;P_CTB;Situacao Contabilizacao;1;1;0;;"2";;0=DIFERENCAS;1=CONTABILIZACAO OK;2=AMBOS;N;N;;
+SF1FAT;01;I_F1_FORNECE;Fornecedor Inicial;1;6;0;;;SA2;;N;N;;Fornecedor inicial
+SF1FAT;02;I_F1_LOJA;Loja Inicial;1;2;0;;;;;N;N;;Loja Inicial
+SF1FAT;03;F_F1_FORNECE;Fornecedor Final;1;6;0;;"ZZZZZZ";SA2;;N;N;;Fornecedor Final
+SF1FAT;04;F_DS_LOJA;Loja Final;1;2;0;;"ZZ";;;N;N;;Loja Final
+SF1FAT;05;DEMISSAO;Data de Emissao Inicial;4;8;0;;;;;N;N;;Data de Emissao Inicial da Nota
+SF1FAT;06;FEMISSAO;Data de Emissao Final;4;8;0;;;;;N;N;;Data de Emissao Final da Nota
+SF2;01;I_F2_DTDIGIT;Digitacao Inicial;4;8;0;;;;;N;N;;
+SF2;02;F_F2_DTDIGIT;Digitacao Final;4;8;0;;;;;N;N;;
+SF2;03;P_F2_XFSC;Conferencia Fiscal;1;1;0;;"3";;0=PENDENTE;1=INCONSISTENCIA;2=CONFERIDO;3=TODOS;N;N;;
+SF2;04;P_F2_XCTB;Conferencia Contabil;1;1;0;;"3";;0=PENDENTE;1=INCONSISTENCIA;2=CONFERIDO;3=TODOS;N;N;;
+SF2;05;P_CTB;Situacao Contabilizacao;1;1;0;;"2";;0=DIFERENCAS;1=CONTABILIZACAO OK;2=AMBOS;N;N;;
+SFT;01;MV_PAR01;Filial Inicial;1;2;0;;;SM0;;N;N;;
+SFT;02;MV_PAR02;Filial Final;1;2;0;;;SM0;;N;N;;
+SFT;03;MV_PAR03;Dt Entrada Inicial;4;8;0;;;;;N;N;;
+SFT;04;MV_PAR04;Dt Entrada Final;4;8;0;;;;;N;N;;
+SFT;05;MV_PAR05;Tipo;1;1;0;;"A";;E=ENTRADAS;S=SAIDAS;A=AMBOS;N;N;;
+SFT;06;I_FT_SERIE;Serie Inicial;1;3;0;;;;;N;N;;
+SFT;07;F_FT_SERIE;Serie Final;1;3;0;;"ZZZ";;;N;N;;
+SFT;08;I_FT_NFISCAL;Nota Inicial;1;9;0;;;;;N;N;;
+SFT;09;F_FT_NFISCAL;Nota Final;1;9;0;;"999999999";;;N;N;;
+SFT;10;I_FT_CLIEFOR;Cliente/Fornecedor Inicio;1;6;0;;;;;N;N;;
+SFT;11;F_FT_CLIEFOR;Cliente/Fornecedor Fim;1;6;0;;"999999";;;N;N;;
+SFT;12;I_FT_LOJA;Loja Inicial;1;2;0;;;;;N;N;;
+SFT;13;F_FT_LOJA;Loja Final;1;2;0;;"99";;;N;N;;
+SFT;14;I_F4_CODIGO;Tes Inicial;1;3;0;;;SF4;;N;N;;
+SFT;15;F_F4_CODIGO;Tes Final;1;3;0;;"999";SF4;;N;N;;
+SFT;16;NV_TES;Somente Itens c/Nova TES;1;1;0;;"2";;1=SIM;2=NAO;N;N;;
+SFTSUM;01;I_FT_FILIAL;Filial Inicial;1;2;0;;;SM0;;N;N;;
+SFTSUM;02;F_FT_FILIAL;Filial Final;1;2;0;;;SM0;;N;N;;
+SFTSUM;03;I_FT_ENTRADA;Data Inicial;4;8;0;@D;;;;N;N;;
+SFTSUM;04;F_FT_ENTRADA;Data Final;4;8;0;@D;;;;N;N;;
+SFTSUM;05;FT_TIPO_MOV;Tipo;1;1;0;;;;E=ENTRADA;S=SAIDAS;A=AMBOS;N;N;;
+SX5;01;I_X5_TABELA;Tabela Inicial;1;2;0;;;SX5;;N;N;;
+SX5;02;F_X5_TABELA;Tabela Final;1;2;0;;;SX5;;N;N;;
+XMLSEF;01;DS_STATUS;Apesenta gerados ?;1;1;0;;;;1=SIM;2=NAO;N;N;;Indica se os documentos ja gerados serao apresentados na consulta
+XMLSEF;02;I_DS_FORNECE;Fornecedor Inicial;1;6;0;;;SA2;;N;N;;Codigo do Fornecedor do Protheus Inicial a ser Apresentado
+XMLSEF;03;I_DS_LOJA;Loja Inicial;1;2;0;;;;;N;N;;Loja do Fornecedor Inicial
+XMLSEF;04;F_DS_FORNECE;Fornecedor Final;1;6;0;;"ZZZZZZ";SA2;;N;N;;Codigo do Fornecedor do Protheus Final a ser Apresentado
+XMLSEF;05;F_DS_LOJA;Loja Final;1;2;0;;"ZZ";;;N;N;;Loja do Fornecedor Final

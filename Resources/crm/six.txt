@@ -1,0 +1,9 @@
+PO1;1;PO1_FILIAL+PO1_VALIDA;Codigo Regra;Codigo Regra;Codigo Regra;U;;;N;;
+PO1;2;PO1_FILIAL+PO1_DESCRI;Nome Regra;Nome Regra;Nome Regra;U;;;N;;
+PO2;1;PO2_FILIAL+PO2_VALIDA+PO2_CARGO+PO2_VEND;Regra + Cargo + Vendedor;Regra + Cargo + Vendedor;Regra + Cargo + Vendedor;U;;;N;;
+ZRM;1;ZRM_FILIAL+ZRM_IDPROC;Processo;Processo;Processo;U;;;S;;
+ZRM;2;ZRM_FILIAL+ZRM_ALIAS+ZRM_CHAVE;Alias+Chave;Alias+Chave;Alias+Chave;U;;;S;;
+ZRM;3;ZRM_FILIAL+ZRM_CODPRC+ZRM_ALIAS+ZRM_CHAVE;Cod.Proc + Alias + Chave;Cod.Proc + Alias + Chave;Cod.Proc + Alias + Chave;U;;;S;;
+ZXS;1;ZXS_FILIAL + ZXS_IDPROC + ZXS_TPAPRO + ZXS_ITEM + ZXS_SEQ;ID Processo + Tipo + Item;ID Processo + Tipo + Item;ID Processo + Tipo + Item;U;;;S;;
+ZXS;2;ZXS_FILIAL + ZXS_IDFLG;ID Fluig;ID Fluig;ID Fluig;U;;;S;;
+ZXS;3;ZXS_FILIAL+ZXS_STENV+ZXS_IDPROC;St. Env.+ID Proc.;St. Env.+ID Proc.;St. Env.+ID Proc.;U;;;S;;

@@ -1,0 +1,16 @@
+000000;000001;INTEGRACAO RECEITAWS;1;https://www.receitaws.com.br;/v1/cnpj/;0;2;;;;;2;;;;;;;
+000001;000000;TOKEN CONTA AZUL;3;https://api.contaazul.com/oauth2;https://api.contaazul.com/v1/products?code=999;0;2;;;code:Vy5dGJLCMtMHldnO5Vu471C09BLoHv9H;basic:Tnc2SWJSdU5QSUNkQ3RkUURUUGZKSFRoNFdweXczUGk6Ujd1RW44OWVXOFVPNFdsU3pqN0p1REppYkVJNjBCU0I=;acess_token:bVyOG50hggM1SiXkQYOet5gZzBxg7iXr;refresh_token:HVPYmrvFZ7YI5TWJtSrW6f9iN9GaXh3U;;2;;;;;;;Authorization: Bearer bVyOG50hggM1SiXkQYOet5gZzBxg7iXr
+000001;000001;CRIACAO DO PRODUTO;3;https://api.contaazul.com/v1/products;;0;1;;;;000000;2;E;1;SB1;B1_FILIAL;B1_COD;ID;
+000001;000002;ATUALIZACAO DO PRODUTO;2;https://api.contaazul.com/v1/products;<advpl>"/" + AllTrim((oCQuery:Alias())->PMV_IDESTR)</advpl>;0;1;;;;000000;2;E;2;SB1;B1_FILIAL;B1_COD;ID;
+000001;000003;DELECAO DO PRODUTO;4;https://api.contaazul.com/v1/products;;0;1;;;;000000;2;E;3;SB1;B1_FILIAL;B1_COD;ID;
+000001;000004;CRIACAO DO SERVICO;3;https://api.contaazul.com/v1/services;;0;1;;;;000000;2;E;1;SB1;B1_FILIAL;B1_COD;ID;
+000001;000005;ATUALIZACAO DO SERVICO;2;https://api.contaazul.com/v1/services;<advpl>"/" + AllTrim((oCQuery:Alias())->PMV_IDESTR)</advpl>;0;1;;;;000000;2;E;2;SB1;B1_FILIAL;B1_COD;ID;
+000001;000006;EXCLUSAO DO SERVICO;4;https://api.contaazul.com/v1/services;;0;1;;;;000000;2;E;3;SB1;B1_FILIAL;B1_COD;ID;
+000001;000007;CRIACAO DO CLIENTE;3;https://api.contaazul.com/v1/customers;;0;1;;;;000000;2;E;1;SA1;A1_FILIAL;A1_COD+A1_LOJA;ID;
+000001;000008;ATUALIZACAO DO CLIENTE;3;https://api.contaazul.com/v1/customers;;0;1;;;;000000;2;E;2;SA1;A1_FILIAL;A1_COD+A1_LOJA;ID;
+000001;000009;EXCLUSAO DO CLIENTE;4;https://api.contaazul.com/v1/customers;;0;1;;;;000000;2;E;3;SA1;A1_FILIAL;A1_COD+A1_LOJA;ID;
+000001;000010;CRIACAO DA VENDA;3;https://api.contaazul.com/v1/sales;;0;1;;;;000000;2;E;1;SF2;F2_FILIAL;F2_SERIE+F2_DOC;ID;
+000001;000011;ATUALIZACAO DA VENDA;3;https://api.contaazul.com/v1/sales;;0;1;;;;000000;2;E;2;SF2;F2_FILIAL;F2_SERIE+F2_DOC;ID;
+000001;000012;EXCLUSAO DA VENDA;4;https://api.contaazul.com/v1/sales;;0;1;;;;000000;2;E;3;SF2;F2_FILIAL;F2_SERIE+F2_DOC;ID;
+000002;000001;LOGIN AUTOMATIZE ISS;3;http://localhost:8080/giss-automatize/api;/login-giss-online?user=66203&password=greg66203;0;1;;;;;2;;;;;;;
+000002;000002;BUSCA SERVICOS PRESTADOS;1;http://localhost:8080/giss-automatize/api/bookkeeping-consult/;by-competence?;0;1;;;;;2;;;;;;;

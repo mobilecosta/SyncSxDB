@@ -1,0 +1,7 @@
+query;PQ1,PQ2,PQ3,PQ4,PQ5,PQ6,PQ7,PQ8,PQ9;;{'PQ1_','PQ2_','PQ3_','PQ4_','PQ5_','PQ6_','PQ7_','PQ8_','PQ9_'};_4;{}
+integrador;AOX,PN1,PN2,PN4,PNE,PNM,PMV;;{'AOX_','PN1_','PN2_','PNE_','PNM_','PMV_'};;{}
+crm;AOX,PO1,PO2,ZRM,ZXS;;{'AOX_','PO1_','PO2_','ZRM_','ZXS_'};;{}
+pol;POL,POM,POR,ZXS;;{'POL_','POM_','POR_'};;{}
+xml;SDS,SDT;;{'DS_','DT_'};;{}
+tef;PQT,PQV,PQU,PQY;;{'PQT_','PQV_','PQU_','PQY_'};;{}
+ctt;PD0,PD2,PD3,PD4,PD5,PD6,PD7,PD8,PD9,PDA,PDF,PDG,PDH,PDI,PDJ,PDL,PDM,PDN,PDO;;{'PD0','PD2','PD3','PD4','PD5','PD6','PD7','PD8','PD9','PDA','PDF','PDG','PDH','PDI','PDJ','PDL','PDM','PDN','PDO'};;{}

@@ -1,0 +1,8 @@
+POL;1;POL_FILIAL+POL_CARREG;Carregamento;Carregamento;Carregamento;U;;;S;;
+POM;1;POM_FILIAL+POM_CARREG+POM_SERIE+POM_DOC;Carregamento+Serie+Documento;Carregamento+Serie+Documento;Carregamento+Serie+Documento;U;;;S;;
+POM;2;POM_FILIAL+POM_SERIE+POM_DOC;Serie+Documento;Serie+Documento;Serie+Documento;U;;;S;;
+POM;3;POM_CHVNFE;Chave Nfe;Chave Nfe;Chave Nfe;U;;CHVNFE;S;;
+POR;1;POR_FILIAL+POR_CARREG+POR_SERIE+POR_DOC+POR_VOLUME;Carregamento+Serie+Documento+Volume;Carregamento+Serie+Documento+Volume;Carregamento+Serie+Documento+Volume;U;;;S;;
+ZXS;1;ZXS_FILIAL + ZXS_IDPROC + ZXS_TPAPRO + ZXS_ITEM + ZXS_SEQ;ID Processo + Tipo + Item;ID Processo + Tipo + Item;ID Processo + Tipo + Item;U;;;S;;
+ZXS;2;ZXS_FILIAL + ZXS_IDFLG;ID Fluig;ID Fluig;ID Fluig;U;;;S;;
+ZXS;3;ZXS_FILIAL+ZXS_STENV+ZXS_IDPROC;St. Env.+ID Proc.;St. Env.+ID Proc.;St. Env.+ID Proc.;U;;;S;;

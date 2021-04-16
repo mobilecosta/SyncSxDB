@@ -1,0 +1,3 @@
+PQ1;1;Definicoes;Definicoes;Definicoes;U;;
+PQ1;2;MVC;MVC;MVC;U;;
+PQ1;3;Seguranca;Seguranca;Seguranca;U;;

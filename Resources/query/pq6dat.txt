@@ -1,0 +1,903 @@
+ADYZRM;01;2;Pesquisar;1;AxPesqui();;;;
+ADYZRM;02;2;Visualizar;1;U_TRGMVCEX(1);;;;
+ADYZRM;03;2;Aprovar;4;U_TRGMVCEX(4);;
+__REFRESH := .T.;;;;ADY->(DbGoto((aQuery[1][2]:cAlias)->ADY_RECNO));;
+ADY->(RecLock("ADY", .F.));;
+ADY->ADY_STATUS  := If(oModel:GetValue("ZRM_STATUS") == "1", "A", "D");;
+If(oModel:GetValue("ZRM_STATUS") == "1", ADY->ADY_USAPRP  := __cUserID, Nil);;
+If(oModel:GetValue("ZRM_STATUS") == "1", ADY->ADY_DTAPRP  := Date(), Nil);;
+If(oModel:GetValue("ZRM_STATUS") == "1", ADY->ADY_HRAPRP  := Time(), Nil);;
+If(oModel:GetValue("ZRM_STATUS") == "1", ADY->ADY_OBSAPRP  := oModel:GetValue("ZRM_OBS"), Nil);;
+If(oModel:GetValue("ZRM_STATUS") == "2", ADY->ADY_MTREPR := oModel:GetValue("ADY_MTREPR"), Nil);;
+If(oModel:GetValue("ZRM_STATUS") == "2", ADY->ADY_USREPR  := __cUserID, Nil);;
+If(oModel:GetValue("ZRM_STATUS") == "2", ADY->ADY_DTREPR  := Date(), Nil);;
+If(oModel:GetValue("ZRM_STATUS") == "2", ADY->ADY_HRREPR  := Time(), Nil);;
+If(oModel:GetValue("ZRM_STATUS") == "2", ADY->ADY_OBSREPR  := oModel:GetValue("ZRM_OBS"), Nil);;
+ADY->(MsUnLock());;
+
+U_TCRMX021(oModel:GetValue("ZRM_IDPROC"),, Val(oModel:GetValue("ZRM_STATUS")), __cUserID, oModel:GetValue("ZRM_OBS"));;;;If((aQuery[1][2]:cAlias)->ZRM_STATUS $ "12", Help("",1,"HELP","PQ6_ACTIVA","Processo [" + (aQuery[1][2]:cAlias)->ZRM_IDPROC + "] ja aprovado !",1), Nil);;
+__EXIT := (aQuery[1][2]:cAlias)->ZRM_STATUS $ "12";;
+CB0;01;2;Pesquisar;2;AxPesqui()
+;;;;
+CB0;02;2;Visualizar;2;cCadastro:= oCQuery:cCadastro
+AxVisual("CB0", CB0->(Recno()),2)
+;;;;
+CB0;03;2;Incluir;3;cCadastro:= oCQuery:cCadastro
+AxInclui("CB0", 0,3)
+;;;;
+CB0;04;2;Alterar;4;cCadastro:= oCQuery:cCadastro
+aParam  := { { || .T. }, { || .T. }, { || U_ExcAdvpl(M->PQ6_GDVPL) }, { || .T. } };;
+AxAltera("CB0", CB0->(Recno()), 4,,, , , , , , , aParam );;;;;;
+CB0;05;2;Excluir;5;cCadastro:= oCQuery:cCadastro
+AxDeleta("CB0", CB0->(Recno()),5);;;;
+CB1;01;2;Pesquisar;1;AxPesqui(oCQuery:Alias());;;;
+CB1;02;2;Visualizar;2;AxVisual("CB1", CB1->(Recno()), 2);;;;
+CB1;03;2;Etiqueta;4;__EXIT := ! MsgYesNo("Confirma a impressão da etiqueta do operador [" + CB1->CB1_CODOPE + "-" + ALLTRIM(CB1->CB1_NOME) + "] ?")
+U_CACDXETI("CB1", "Etiqueta do Operador");;;;
+CB2;01;2;Pesquisar;1;AxPesqui(oCQuery:Alias());;;;
+CB2;02;2;Visualizar;2;__RECNO := (oCQuery:Alias())->(Recno())
+(oCQuery:Alias())->(DbCloseArea())
+CB2->(DbGoto(__RECNO))
+AxVisual("CB2", CB2->(Recno()), 2)
+CB2->(DbCloseArea())
+(oCQuery:Alias())->(DbGoTo(__RECNO))
+__REFRESH := .T.;;;;
+CB2;03;2;Incluir;3;(oCQuery:Alias())->(DbCloseArea())
+AxInclui("CB2", 0, 3)
+CB2->(DbCloseArea())
+__REFRESH := .T.;;;;
+CB2;04;2;Alterar;4;__RECNO := (oCQuery:Alias())->(Recno())
+(oCQuery:Alias())->(DbCloseArea())
+CB2->(DbGoto(__RECNO))
+AxAltera("CB2", CB2->(Recno()), 4)
+CB2->(DbCloseArea())
+(oCQuery:Alias())->(DbGoTo(__RECNO))
+__REFRESH := .T.;;;;
+CB2;05;2;Excluir;5;__RECNO := (oCQuery:Alias())->(Recno())
+(oCQuery:Alias())->(DbCloseArea())
+CB2->(DbGoto(__RECNO))
+AxDeleta("CB2", CB2->(Recno()), 5)
+CB2->(DbCloseArea())
+(oCQuery:Alias())->(DbGoTo(__RECNO))
+__REFRESH := .T.;;;;
+CB2;06;2;Etiqueta Horizonal;4;__EXIT := ! MsgYesNo("Confirma a impressão da etiqueta do cartão de volume [" + (oCQuery:Alias())->CB2_DISPID + "-" + ALLTRIM((oCQuery:Alias())->CB2_XDESC) + "] ?")
+__RECNO := (oCQuery:Alias())->(Recno())
+(oCQuery:Alias())->(DbCloseArea())
+CB2->(DbGoto(__RECNO))
+U_CACDXETI("CB2HOR", "Etiqueta do Cartao de Volume", "CB2")
+__REFRESH := .T.
+CB2->(DbCloseArea());;;;
+CB2;07;2;Etiqueta Vertical;0;__EXIT := ! MsgYesNo("Confirma a impressão da etiqueta do cartão de volume [" + (oCQuery:Alias())->CB2_DISPID + "-" + ALLTRIM((oCQuery:Alias())->CB2_XDESC) + "] ?")
+__RECNO := (oCQuery:Alias())->(Recno())
+(oCQuery:Alias())->(DbCloseArea())
+CB2->(DbGoto(__RECNO))
+U_CACDXETI("CB2VER", "Etiqueta do Cartao de Volume", "CB2")
+CB2->(DbCloseArea())
+__REFRESH := .T.;;;;
+CB6;01;2;Pesquisar;1;AxPesqui(oCQuery:Alias());;;;
+CB6;02;2;Visualizar;2;CB6->(DbGoto((oCQuery:Alias())->(Recno())))
+AxVisual("CB6", CB6->(Recno()), 2)
+__REFRESH := .T.;;;;
+CB6;03;2;Novo Volume;3;U_CACDA040();;2;;
+CB6;04;2;Gerar NF;4;CB6->(DbGoto((oCQuery:Alias())->(Recno())))
+M->CB6_XAGLUT := (oCQuery:Alias())->CB6_XAGLUT
+U_CACD40NF();;;;
+CB6;05;2;Etiqueta Individual;4;CB6->(DbGoto((oCQuery:Alias())->(Recno())))
+M->CB6_VOLUME := (oCQuery:Alias())->CB6_VOLUME
+U_CACD40ET(.F.)
+__REFRESH := .T.;;;;
+CB6;06;2;Etiqueta Agrupamento;2;CB6->(DbGoto((oCQuery:Alias())->(Recno())))
+M->CB6_XAGLUT := (oCQuery:Alias())->CB6_XAGLUT
+U_CACD40ET(.T.)
+__REFRESH := .T.;;;;
+CB6;07;2;Estornar;4;CB6->(DbGoto((oCQuery:Alias())->(Recno())))
+U_CACD40DE()
+__REFRESH := .T.;;;;
+CB6;08;2;Visualizar NF;2;__EXIT := If(Empty(AllTrim((oCQuery:Alias())->CB6_NOTA)), (MsgInfo("Atenção. A nota do volume [" + (oCQuery:Alias())->CB6_VOLUME + "] não foi gerada !"), .T.), .F.);;
+
+CB6->(DbGoto((oCQuery:Alias())->(Recno())))
+
+SF2->(DbSetOrder(1));;
+SF2->(DbSeek(xFilial() + CB6->(CB6_NOTA + CB6_SERIE)));;
+LjMsgRun("Visualizando a Nota...","Aguarde",{|| Mc090Visual("SF2", SF2->(Recno()), 2) });;
+__REFRESH := .T.;;;;
+CT2CTK;01;2;Pesquisar;1;AxPesqui();;;;
+CT2CTK;02;2;Visualizar;2;lCt102Auto  := .f.
+aAutoCab    := {}
+aAutoItens  := {}
+
+cCadastro   := "Lançamentos Contábeis - Automaticos"
+dDataLanc   := Nil
+cLote       := Nil
+cLoteSub    := GetMv("MV_SUBLOTE")
+cSubLote    := cLoteSub
+lSubLote    := Empty(cSubLote)
+cDoc        := Nil
+
+__lCusto    := __lItem  := __lCLVL := .F.
+aCtbEntid   := Nil
+
+CT2->(Dbgoto((__QUERY[2]:cAlias)->RECNO_CT2))
+Ctba102Cal("CT2",CT2->(Recno()),2);;;;
+CTZSA1;01;2;Pesquisar;1;AxPesqui();;;;
+CTZSA1;02;2;Importar Clientes;3;oCQuery  := aQuery[1][2];;
+nTypeImp := 2;;
+__ALIAS := "SA1";;
+MsAguarde({|| U_TRGXLCSV()  },"Aguarde...","Executando [" + cTitulo + "]");;
+__REFRESH := .T.;;;;;;
+CTZSA1;03;4;Enviar Conta Azul;4;MsAguarde({|| U_TGERREST("000001", (aQuery[1][2]:Alias())->PN4_PROCES, __PQ1_ID) },"Aguarde...","Executando [" + cTitulo + "]")
+__REFRESH := .T.;;;;
+CTZSB1;01;2;Pesquisar;1;AxPesqui();;;;
+CTZSB1;02;2;Importar Produtos;3;oCQuery  := aQuery[1][2];;
+nTypeImp := 2;;
+__ALIAS := "SB1";;
+MsAguarde({|| U_TRGXLCSV()  },"Aguarde...","Executando [" + cTitulo + "]");;
+__REFRESH := .T.;;;;;;
+CTZSB1;03;4;Enviar Conta Azul;3;MsAguarde({|| U_TGERREST("000001", (aQuery[1][2]:Alias())->PN4_PROCES, __PQ1_ID) },"Aguarde...","Executando [" + cTitulo + "]")
+__REFRESH := .T.;;;;
+CTZSF2;01;2;Pesquisar;1;AxPesqui();;;;
+CTZSF2;02;2;Importar Vendas;3;lChkFields := .F.;;
+oCQuery  := aQuery[1][2];;
+nTypeImp := 2;;
+__ALIAS := "SF2";;
+MsAguarde({|| U_TRGXLCSV()  },"Aguarde...","Executando [" + cTitulo + "]");;
+__REFRESH := .T.;;;;;;
+CTZSF2;03;2;Importar Itens;3;lChkFields := .F.;;
+oCQuery  := aQuery[1][2];;
+nTypeImp := 2;;
+__ALIAS := "SD2";;
+MsAguarde({|| U_TRGXLCSV()  },"Aguarde...","Executando [" + cTitulo + "]");;
+__REFRESH := .T.;;;;;;
+CTZSF2;04;2;Importar Parcelas;4;lChkFields := .F.;;
+oCQuery  := aQuery[1][2];;
+nTypeImp := 2;;
+__ALIAS := "SE1";;
+MsAguarde({|| U_TRGXLCSV()  },"Aguarde...","Executando [" + cTitulo + "]");;
+__REFRESH := .T.;;;;;;
+CTZSF2;05;4;Enviar para o Conta Azul;4;MsAguarde({|| U_TGERREST("000001", (aQuery[1][2]:Alias())->PN4_PROCES, __PQ1_ID) },"Aguarde...","Executando [" + cTitulo + "]")
+__REFRESH := .T.;;;;
+CTZSRV;01;2;Pesquisar;1;AxPesqui();;;;
+CTZSRV;02;2;Importar Servicos;3;nTypeImp := 2
+__ALIAS := "SB1"
+MsAguarde({|| U_TRGXLCSV()  },"Aguarde...","Executando [" + cTitulo + "]")
+__REFRESH := .T.;;;;
+CTZSRV;03;4;Enviar Conta Azul;3;MsAguarde({|| U_TGERREST("000001", (aQuery[1][2]:Alias())->PN4_PROCES, __PQ1_ID) },"Aguarde...","Executando [" + cTitulo + "]")
+__REFRESH := .T.;;;;
+ESTFEC;01;2;Pesquisar;1;AxPesqui();;;;
+ESTFEC;02;2;Kardex Tela;3;MATC030();;;;
+ESTFEC;03;2;Kardex Relatorio;3;MATR910();;;;
+ESTFEC;04;2;Gera Inventario Diferencas;3;__EXIT  := ! MsgYesNo("Confirma a geração do inventário no dia [" + mv_par01 + "] para os itens com diferença ?")
+U_ExecSQL("EXECUTE dbo.ct_acerta_estoque '" + xFilial("SB2") + "', '" + mv_par01 + "', '" + cUserName + "'")
+;;;;
+FINCT2;1;2;Pesquisar;1;AxPesqui();;;;
+IMPSB1;01;2;Pesquisar;2;AxPesqui();;;;
+IMPSB1;02;2;Importar CSV;3;nTypeImp := 2;;
+__ALIAS := aQuery[1][2]:cAlias;;
+U_TRGXLCSV();;
+MsAguarde({|| U_ExecSQL(M->PQ6_SQL) },"Aguarde...","Atribuindo status de importacao");;;UPDATE <ADVPL>aQuery[1][2]:cArqTrb</ADVPL> 
+   SET STATUS = CASE WHEN NOT EXISTS(SELECT 1 FROM <ADVPL>RetSqlName("SB1")</ADVPL> SB1
+                                      WHERE B1_FILIAL = '<ADVPL>xFilial("SB1")</ADVPL>' 
+                                        AND B1_COD = <ADVPL>aQuery[1][2]:cArqTrb</ADVPL>.B1_COD
+                                        AND D_E_L_E_T_ = ' ') THEN '2' ELSE '1' END;;;
+IMPSB1;03;2;Atualizar Produtos;4;MsAguarde({|| U_ExecSQL(M->PQ6_SQL) },"Aguarde...","Executando [" + cTitulo + "]");;
+TCRefresh(aQuery[1][2]:cArqTrb);;;UPDATE <ADVPL>RetSqlName("SB1")</ADVPL> 
+   SET B1_DESC = (SELECT B1_DESC FROM <ADVPL>aQuery[1][2]:cArqTrb</ADVPL>
+                   WHERE B1_COD = <ADVPL>RetSqlName("SB1")</ADVPL>.B1_COD AND D_E_L_E_T_ = ' ')
+ WHERE B1_FILIAL = '<ADVPL>xFilial("SB1")</ADVPL>' 
+   AND B1_COD IN (SELECT B1_COD FROM <ADVPL>aQuery[1][2]:cArqTrb</ADVPL> WHERE STATUS = '1')  AND D_E_L_E_T_ = ' ';;
+UPDATE <ADVPL>aQuery[1][2]:cArqTrb</ADVPL> SET STATUS = '3' WHERE STATUS = '1';;;
+MONEXP;01;2;Pesquisar;1;AxPesqui();;;;
+MONITE;01;2;Pesquisar;1;AxPesqui();;;;
+MONITE;99;5;Cria Form;3;__C6_QTDVEN := 0;;  
+__PRODUTO := "";;
+If(mv_par08 = '1', (aQuery[2][2]:cAlias)->(DbSetOrder(2)), Nil);;
+If(mv_par08 = '1', (aQuery[2][2]:cAlias)->(DbGoTop()), Nil);;
+If(mv_par08 = '1', MsAguarde({|| U_TRGWHILE(aQuery[2][2]:cAlias, ALLTRIM(M->PQ6_GDVPL), {}) },"Aguarde...","Recalculando Saldo em Estoque ..."), Nil);;;;__C6_QTDVEN := If(__PRODUTO <> (aQuery[2][2]:cAlias)->C6_PRODUTO, 0, (aQuery[2][2]:cAlias)->C6_QTDVEN);;
+RecLock(aQuery[2][2]:cAlias, .F.);;
+(aQuery[2][2]:cAlias)->BF_QUANT -= __C6_QTDVEN;;
+(aQuery[2][2]:cAlias)->(MsUnLock());;
+
+__PRODUTO := (aQuery[2][2]:cAlias)->C6_PRODUTO;;;;
+PN1;01;2;Pesquisar;1;AxPesqui();;;;
+PN1;02;2;Visualizar;2;AxVisual("PN1", PN1->(Recno()), 2);;;;
+PN2;01;2;Pesquisar;1;AxPesqui();;;;
+PN2;02;2;Visualizar;2;cCadastro:= oCQuery:cCadastro
+AxVisual("PN2", PN2->(Recno()),2);;;;
+PN2;03;2;Incluir;3;cCadastro:= oCQuery:cCadastro
+AxInclui("PN2", 0,3);;;;
+PN2;04;2;Alterar;4;cCadastro:= oCQuery:cCadastro
+aParam  := { { || .T. }, { || .T. }, { || U_ExcAdvpl(M->PQ6_GDVPL) }, { || .T. } };;
+AxAltera("PN2", PN2->(Recno()), 4,,, , , , , , , aParam );;;;
+PN2;05;2;Excluir;5;cCadastro:= oCQuery:cCadastro
+AxDeleta("PN2", PN2->(Recno()),5);;;;
+PN4;01;2;Pesquisar;1;AxPesqui();;;;
+PN4;02;2;Visualizar;2;cCadastro:= oCQuery:cCadastro
+AxVisual("PN4", PN4->(Recno()),2);;;;
+PN4;03;2;Incluir;3;cCadastro:= oCQuery:cCadastro
+AxInclui("PN4", 0,3);;;;
+PN4;04;2;Alterar;4;cCadastro:= oCQuery:cCadastro
+aParam  := { { || .T. }, { || .T. }, { || U_ExcAdvpl(M->PQ6_GDVPL) }, { || .T. } };;
+AxAltera("PN4", PN4->(Recno()), 4,,, , , , , , , aParam );;;;
+PN4;05;2;Excluir;5;cCadastro:= oCQuery:cCadastro
+AxDeleta("PN4", PN4->(Recno()),5);;;;
+PNE;01;2;Pesquisar;1;AxPesqui();;;;
+PNE;02;2;Visualizar;2;cCadastro:= oCQuery:cCadastro
+AxVisual("PNE", PNE->(Recno()),2);;;;
+PNE;03;2;Incluir;3;cCadastro:= oCQuery:cCadastro
+AxInclui("PNE", 0,3);;;;
+PNE;04;2;Alterar;4;cCadastro:= oCQuery:cCadastro
+aParam  := { { || .T. }, { || .T. }, { || U_ExcAdvpl(M->PQ6_GDVPL) }, { || .T. } };;
+AxAltera("PNE", PNE->(Recno()), 4,,, , , , , , , aParam );;;;
+PNE;05;2;Excluir;5;cCadastro:= oCQuery:cCadastro
+AxDeleta("PNE", PNE->(Recno()),5);;;;
+PNM;01;2;Pesquisar;2;AxPesqui()
+;;;;
+PNM;02;2;Visualizar;2;cCadastro:= oCQuery:cCadastro
+AxVisual("CB0", CB0->(Recno()),2)
+;;;;
+PNM;03;2;Incluir;3;cCadastro:= oCQuery:cCadastro
+AxInclui("PNM", 0,3)
+;;;;
+PNM;04;2;Alterar;4;cCadastro:= oCQuery:cCadastro
+aParam  := { { || .T. }, { || .T. }, { || U_ExcAdvpl(M->PQ6_GDVPL) }, { || .T. } };;
+AxAltera("PNM", PNM->(Recno()), 4,,, , , , , , , aParam );;;;;;
+PNM;05;2;Excluir;5;cCadastro:= oCQuery:cCadastro
+AxDeleta("PNM", PNM->(Recno()),5);;;;
+PNM;06;2;Executar Job;4;U_TIntXJOBEx(.T.);;;;
+PO1;01;2;Pesquisar;1;AxPesqui();;;;
+PO1;02;2;Visualizar;2;cCadastro:= oCQuery:cCadastro
+AxVisual("PQ1", PQ1->(Recno()),2);;;;
+PO1;03;2;Inclusao;3;cCadastro:= oCQuery:cCadastro
+AxInclui("PO1", 0,3);;;;
+PO1;04;2;Alterar;4;cCadastro:= oCQuery:cCadastro
+aParam  := { { || .T. }, { || .T. }, { || U_ExcAdvpl(M->PQ6_GDVPL) }, { || .T. } };;
+AxAltera("PO1", PO1->(Recno()), 4,,, , , , , , , aParam );;;;
+PO1;05;2;Exclusao;5;cCadastro:= oCQuery:cCadastro
+AxDeleta("PO1", PO1->(Recno()),5);;;;
+PO2;01;2;Pesquisar;1;AxPesqui();;;;
+PO2;02;2;Visualizar;2;cCadastro:= oCQuery:cCadastro
+AxVisual("PO2", PO2->(Recno()),2);;;;
+PO2;03;2;Inclusao;3;cCadastro:= oCQuery:cCadastro
+AxInclui("PO2", 0,3);;;;
+PO2;04;2;Alterar;4;cCadastro:= oCQuery:cCadastro
+aParam  := { { || .T. }, { || .T. }, { || U_ExcAdvpl(M->PQ6_GDVPL) }, { || .T. } };;
+AxAltera("PO2", PO2->(Recno()), 4,,, , , , , , , aParam );;;;
+PO2;05;2;Exclusao;5;cCadastro:= oCQuery:cCadastro
+AxDeleta("PO2", PO2->(Recno()),5);;;;
+POL;01;2;Pesquisar;1;AxPesqui();;;;
+POL;02;2;Visualizar;2;cCadastro:= oCQuery:cCadastro
+AxVisual("POL", POL->(Recno()),2);;;;
+POL;03;2;Incluir;3;cCadastro:= oCQuery:cCadastro
+AxInclui("POL", 0,3);;;;
+POL;04;2;Alterar;4;cCadastro:= oCQuery:cCadastro
+aParam  := { { || .T. }, { || .T. }, { || U_ExcAdvpl(M->PQ6_GDVPL) }, { || .T. } };;
+AxAltera("POL", POL->(Recno()), 4,,, , , , , , , aParam );;;;U_UPDPOL();;
+POL;05;2;Excluir;5;cCadastro:= oCQuery:cCadastro
+AxDeleta("POL", POL->(Recno()),5, "U_DELPOM()");;;;
+POL;06;2;Relatorio;0;U_CACDR010();;;;
+POL;07;2;E-Mail;0;U_CACDM010();;;;
+POL;08;2;Seleciona Notas;4;U_CACDM020();;;;
+POM;01;2;Pesquisar;1;AxPesqui();;;;
+POM;02;2;Visualizar;2;cCadastro:= aQuery[2][2]:cCadastro
+AxVisual("POM", POM->(Recno()),2);;;;
+POM;03;2;Incluir;3;__EXIT := POL->(Eof());;
+cCadastro:= aQuery[2][2]:cCadastro;;
+AxInclui("POM", 0,3,,,,"U_VLDPOMOK()");;;;
+POM;04;2;Alterar;4;cCadastro:= aQuery[2][2]:cCadastro
+AxAltera("POM", POM->(Recno()),4,,,,,"U_VLDPOMOK()");;;;
+POM;05;2;Excluir;5;cCadastro:= aQuery[2][2]:cCadastro
+AxDeleta("POM", POM->(Recno()),5);;;;
+POM;06;2;Visualiza NF;2;SF2->(DbSetOrder(1))
+SF2->(DbSeek(xFilial() + POM->(POM_DOC + POM_SERIE)))
+LjMsgRun("Visualizando a Nota...","Aguarde",{|| Mc090Visual("SF2", SF2->(Recno()), 2) });;;;;;
+POMSF2;01;2;Pesquisar;1;AxPesqui();;;;
+POMSF2;02;2;Visualiza Nota;4;LjMsgRun("Visualizando a Nota...","Aguarde",{|| Mc090Visual("SF2", SF2->(Recno()), 2) });;;;
+POMSF2;03;2;Inicia Referenciamento;3;__LEXIT := ! Empty(SF2->F2_XCARREG);;
+M->POL_CARREG := GetSx8Num("POL", "POL_CARREG");;
+LjMsgRun("Iniciando Referenciamento...","Aguarde",{|| U_ExecSQL(M->PQ6_SQL) });;
+ConfirmSx8()
+__REFRESH := .T.;INSERT INTO <ADVPL>RetSqlName("POL")</ADVPL>(POL_FILIAL, POL_CARREG, POL_DATA, POL_O_TRP, R_E_C_N_O_)
+VALUES ('<ADVPL>xFilial("POL")</ADVPL>', '<ADVPL>M->POL_CARREG</ADVPL>', '<ADVPL>Dtos(dDataBase)</ADVPL>', '2', COALESCE((SELECT MAX(R_E_C_N_O_) + 1 FROM <ADVPL>RetSqlName("POL")</ADVPL>), 1));;
+UPDATE <ADVPL>RetSqlName("SF2")</ADVPL> SET F2_XCARREG = '<ADVPL>M->POL_CARREG</ADVPL>'
+ WHERE F2_FILIAL = '<ADVPL>SF2->F2_FILIAL</ADVPL>' AND F2_DOC = '<ADVPL>SF2->F2_DOC</ADVPL>' AND F2_SERIE = '<ADVPL>SF2->F2_SERIE</ADVPL>'
+   AND D_E_L_E_T_ = ' ';;;
+POMSF2;04;2;Importar Csv Referenciamento;4;__EXIT := (If(Empty(SF2->F2_XCARREG), MsgInfo("Para Importar CSV é obrigatorio iniciar o referenciamento"), ), Empty(SF2->F2_XCARREG))
+
+nTypeImp := 2
+__ALIAS := "POM"
+U_TRGXLCSV();;;;
+POMSF2;05;2;Deletar Referenciamento;5;LjMsgRun("Deletando Referenciamento...","Aguarde",{|| U_ExecSQL(M->PQ6_SQL) });;
+__REFRESH := .T.
+;DELETE FROM <ADVPL>RetSqlName("POM")</ADVPL>
+ WHERE POM_FILIAL = '<ADVPL>SF2->F2_FILIAL</ADVPL>' AND POM_CARREG = '<ADVPL>SF2->F2_XCARREG</ADVPL>' 
+   AND D_E_L_E_T_ = ' ';;;
+RECWS;01;2;Pesquisar;1;AxPesqui();;;;
+RECWS;02;2;Importar Arquivo;3;U_TRGTXTPN1("000000", "RWS", "RWC")
+__REFRESH := .T.;;;;
+RECWS;03;4;Consulta Web Service ReceitaWS;4;cMsgVld    := "";;
+cRetWsPad  := "";;
+cRetWsErro := "";;
+cEnvio := "";;
+__REGPRC := 0;;
+
+MsAguarde({|| U_TRGPN1WS((oCQuery:cAlias)->PN1_CINTEG, "000001", aQuery[2][2]:cAlias, aQuery[2][5])  },"Aguarde...","Executando [" + cTitulo + "]");;__EXIT := ! (aQuery[2][2]:cAlias)->PN1_STATUS $ "12" .OR. Val((aQuery[2][2]:cAlias)->PN1_EXEC) > 05;;
+
+__REGPRC := __REGPRC + 1;;
+__CONTINUA :=  __REGPRC < 4;;
+__EXIT := ! __CONTINUA;;
+
+__REFRESH := .T.;;
+
+cCnpj  := (aQuery[2][2]:cAlias)->PN1_CHAVE;;
+If(oCQuery:lJob, ConOut("JOB - CNPJ: " + cCnpj), "");;
+
+U_FCsmWSAdq("", {}, (oCQuery:cAlias)->PN1_CINTEG, "000001", cCnpj, @cMsgVld , Alltrim( PN4->PN4_USRWSE ), @cRetWsPad , @cRetWsErro , Nil, @cEnvio);;
+PN1->(DbGoto((aQuery[2][2]:cAlias)->PN1_RECNO));;
+PN1->(RecLock("PN1", .F.));;
+PN1->PN1_STATUS := If(Upper(cRetWsErro) = "200 OK" .And. ! "ERROR" $ cRetWsPad, "4", "2")
+If(PN1->(FieldPos("PN1_ENVIO")) > 0, PN1->PN1_ENVIO := cEnvio, Nil);;
+If(PN1->(FieldPos("PN1_RETURN")) > 0, PN1->PN1_RETURN := cRetWsPad, Nil);;
+PN1->PN1_OBSERR := If(PN1->(FieldPos("PN1_RETURN")) > 0, cRetWsErro, cRetWsPad);;
+PN1->PN1_DTINTE := dDataBase;;
+PN1->PN1_HRINTE := Time();;
+cChave := Soma1(Substr(PN1->PN1_CHAVE, 4, 2));;
+If("ERROR" $ cRetWsPad, cChave := "99", Nil);;
+PN1->PN1_CHAVE := Left(PN1->PN1_CHAVE, 3) + cChave  + Substr(PN1->PN1_CHAVE, 6, Len(PN1->PN1_CHAVE));;
+PN1->(MsUnLock());;;;
+RECWS;04;2;Gerar CSV Protheus;4;U_TRGPN1CSV(aQuery[2][2]:cAlias, aQuery[2][5], "PN1_STATUS = '4'", "RECWSC");;;;
+RECWS;05;2;Gerar CSV Padrão;4;U_TRGPN1CSV(aQuery[2][2]:cAlias, aQuery[2][5], "PN1_STATUS = '4'", "RECWSP");;;;
+RECWSC;01;2;Pesquisar;1;AxPesqui();;;;
+RECWSC;02;2;Visualizar;2;PN1->(DbGoTo((aQuery[2][2]:cAlias)->PN1_RECNO))
+AxVisual("PN1", PN1->(Recno()),2);;;;
+SB1;01;2;Pesquisar;1;AxPesqui(oCQuery:Alias())
+;;;;
+SB1;02;2;Visualizar;2;AxVisual(oCQuery:Alias(), (oCQuery:Alias())->(Recno()), 2);;;;
+SB1;03;2;Etiqueta EAN;4;__EXIT := ! MsgYesNo("Confirma a impressão da etiqueta EAN da produto [" + AllTrim(SB1->B1_COD) + "] ?")
+U_CACDXETI("SB1", "Etiqueta de ean do produto");;;;
+SB1;04;2;Incluir;3;cCadastro:= oCQuery:cCadastro
+AxInclui("SB1", 0,3)
+;;;;
+SB6;01;2;Baixar;4;aFields := { "D2_DOC", "D2_SERIE", "D2_CLIENTE", "D2_LOJA", "D2_COD", "D2_QUANT", "D2_XUSRBXT", "D2_XDATBXT", "D2_XDATBXT", "D2_XHORBXT", "D2_XMOTBXT", "D2_XOBSBXT", "NOUSER" };;
+aEdit   := { "D2_XUSRBXT", "D2_XDATBXT", "D2_XDATBXT", "D2_XHORBXT", "D2_XMOTBXT", "D2_XOBSBXT" };;
+aParam  := { { || U_INITD2BX() }, { || U_VLDSD2BX() }, { || U_ExecSQL(M->PQ6_GSQL) }, { || __REFRESH := .T. } };;
+If((oCQuery:Alias())->ALIAS == "SD2", SD2->(DbGoto((oCQuery:Alias())->RECNO)), .T.);;
+__EXIT  := If((oCQuery:Alias())->ALIAS == "SD2" .And. (oCQuery:Alias())->B6_SALDO == 0, (MsgInfo("Não existe saldo neste documento para baixa manual !"), .T.), .F.)
+If((oCQuery:Alias())->ALIAS == "SD2", (U_FillHeader("SD2", "", ""), AxAltera((oCQuery:Alias())->ALIAS, (oCQuery:Alias())->RECNO, 2, aFields, aEdit, , , , , , , aParam )), .T.);;
+aFields := { "D1_DOC", "D1_SERIE", "D1_FORNECE", "D1_LOJA", "D1_COD", "D1_QUANT", "D1_XUSRBXT", "D1_XDATBXT", "D1_XDATBXT", "D1_XHORBXT", "D1_XMOTBXT", "NOUSER" };;
+aEdit   := { "D1_XUSRBXT", "D1_XDATBXT", "D1_XDATBXT", "D1_XHORBXT", "D1_XMOTBXT", "D1_XOBSBXT" };;
+aParam  := { { || U_INITD1BX() }, { || U_VLDSD1BX() }, { || U_ExecSQL(M->PQ6_GSQL) }, { || __REFRESH := .T. } };;
+If((oCQuery:Alias())->ALIAS == "SD1", SD1->(DbGoto((oCQuery:Alias())->RECNO)), .T.);;
+__EXIT  := If((oCQuery:Alias())->ALIAS == "SD1" .And. (oCQuery:Alias())->B6_SALDO == 0, (MsgInfo("Não existe saldo neste documento para baixa manual !"), .T.), .F.)
+If((oCQuery:Alias())->ALIAS == "SD1", AxAltera((oCQuery:Alias())->ALIAS, (oCQuery:Alias())->RECNO, 2, aFields, aEdit, , , , , , , aParam), .T.);;;;;exec dt_baixa_terceiros '<ADVPL>xFilial("SB6")</ADVPL>', '<ADVPL>If((oCQuery:Alias())->ALIAS == "SD2", SD2->D2_IDENTB6, SD1->D1_IDENTB6)</ADVPL>', <ADVPL>AllTrim(Str((oCQuery:Alias())->B6_RECNO))</ADVPL>, '<ADVPL>(oCQuery:Alias())->ALIAS</ADVPL>',  <ADVPL>AllTRim(Str((oCQuery:Alias())->RECNO))</ADVPL>;
+SB6;02;2;Estornar;4;aFields := { "D2_DOC", "D2_SERIE", "D2_CLIENTE", "D2_LOJA", "D2_COD", "D2_QUANT", "D2_XUSRBXT", "D2_XDATBXT", "D2_XDATBXT", "D2_XHORBXT", "D2_XMOTBXT", "D2_XOBSBXT", "NOUSER" };;
+aEdit   := { };;
+aParam  := { { || .T. }, { || .T. }, { || U_ExecSQL(M->PQ6_GSQL) }, { || __REFRESH := .T. } };;
+If((oCQuery:Alias())->ALIAS == "SD2", SD2->(DbGoto((oCQuery:Alias())->RECNO)), .T.);;
+__EXIT  := If((oCQuery:Alias())->ALIAS == "SD2" .And. Right((oCQuery:Alias())->ALIAS, 2) <> (oCQuery:Alias())->B6_ORIGLAN, (MsgInfo("Somente documentos baixados manualmente podem ser estornados !"), .T.), .F.);;
+If((oCQuery:Alias())->ALIAS == "SD2", (U_FillHeader("SD2", "", ""), AxAltera((oCQuery:Alias())->ALIAS, (oCQuery:Alias())->RECNO, 2, aFields, aEdit, , , , , , , aParam )), .T.);;
+aFields := { "D1_DOC", "D1_SERIE", "D1_FORNECE", "D1_LOJA", "D1_COD", "D1_QUANT", "D1_XUSRBXT", "D1_XDATBXT", "D1_XDATBXT", "D1_XHORBXT", "D1_XMOTBXT", "D1_XMOTBXT", "NOUSER" };;
+aEdit   := { };;
+aParam  := { { || .T. }, { || .T. }, { || U_ExecSQL(M->PQ6_GSQL) }, { || __REFRESH := .T. } };;
+If((oCQuery:Alias())->ALIAS == "SD1", SD1->(DbGoto((oCQuery:Alias())->RECNO)), .T.);;
+__EXIT  := If((oCQuery:Alias())->ALIAS == "SD1" .And. Right((oCQuery:Alias())->ALIAS, 2) <> (oCQuery:Alias())->B6_ORIGLAN, (MsgInfo("Somente documentos baixados manualmente podem ser estornados !"), .T.), .F.);;
+If((oCQuery:Alias())->ALIAS == "SD1", AxAltera((oCQuery:Alias())->ALIAS, (oCQuery:Alias())->RECNO, 2, aFields, aEdit, , , , , , , aParam), .T.);;;;;exec dt_estorna_terceiros '<ADVPL>xFilial("SB6")</ADVPL>', '<ADVPL>If((oCQuery:Alias())->ALIAS == "SD2", SD2->D2_IDENTB6, SD1->D1_IDENTB6)</ADVPL>', <ADVPL>AllTrim(Str((oCQuery:Alias())->B6_RECNO))</ADVPL>, '<ADVPL>(oCQuery:Alias())->ALIAS</ADVPL>',  <ADVPL>AllTRim(Str((oCQuery:Alias())->RECNO))</ADVPL>;
+SB6;03;2;Visualizar;2;AxVisual(oCQuery:Alias(), (oCQuery:Alias())->RECNO, 2);;;;
+SB6;04;2;Relatorio;0;MATR480();;;;
+SBF;01;2;Visualizar;2;AxVisual(oCQuery:Alias(), (oCQuery:Alias())->(Recno()), 2);;;;
+SBF;02;2;Imprimir Etiqueta;2;U_VALXETI("SBF", .F., "SBE");;;;
+SBF;03;2;Reeimprimir Etiqueta;2;U_VALXETI("SBF", .T., "SBE");;;;
+SC5001;01;2;Pesquisar;1;AxPesqui();;;;
+SC5001;02;2;Visualizar;2;cCadastro:= oCQuery:cCadastro
+AxVisual(oCQuery:Alias(), (oCQuery:Alias())->(Recno()), 2);;;;
+SC5001;03;2;Liberar Faturamento;3;U_MFATA010();;;;
+SC5001;04;2;Gerar Seriais;3;U_MFATM012();;;;
+SC5001;05;2;Selecionar Seriais;3;U_MFATM010();;;;
+SC5001;06;2;Leitor de Codigo de Barras;3;U_MFATM013();;;;
+SC5FAT;01;2;Pesquisar;0;AxPesqui();;;;
+SC5FAT;02;2;Visualizar;2;A410Visual("SC5", SC5->(Recno()), 2);;;;;;
+SC5FAT;03;2;Gera Nf Entrada;0;If(Empty((aQuery[1][2]:cAlias)->C5_NOTA), MsgInfo("Este pedido não foi fatura. Não é possível gerar o documento de entrada !"), .F.);;
+__EXIT := Empty((aQuery[1][2]:cAlias)->C5_NOTA);;
+
+aParam := {};;
+Aadd(aParam, {1, "TES",GetMv("ES_TESPRP",,"40B"),"@!",'ExistCpo("SF4")','SF4','',3,.T.});;
+Aadd(aParam, {1, "Condicao",GetMv("ES_CNDPRP",,"000"),"@!",'ExistCpo("SE4")','SE4','',3,.T.});;
+Aadd(aParam, {1, "Mensagem para Nota",Left(GetMv("ES_MSGEXPF",, "Nao incidencia de ICMS cfe. Art. 7 inciso V RICMS/00") + Space(Len(SF1->F1_MENNOTA)), Len(SF1->F1_MENNOTA)),"@!",'.T.','','',200,.T.});;
+
+__EXIT := ! ParamBox(aParam, "Parametros da rotina",, {|| AllwaysTrue()},,,,,,, .F.);;
+
+ddEmissao := dDataBase;;
+cFormul := "S";;
+cEspecie := "SPED";;
+cF1_DOC := CriaVar("F1_DOC");;
+cF1_SERIE := CriaVar("F1_SERIE");;
+cA100For := mv_par01;;
+cLoja := mv_par02;;
+__EXIT := ! NfeNextDoc(@cF1_DOC,@cF1_SERIE,.T.,"");;
+
+MsAguarde({|| dbUseArea(.T.,"TOPCONN", TCGENQRY(,,U_ParserADV(AllTrim(M->PQ6_SQL))),"QRYSC6",.F.,.T.)  },"Aguarde...","Selecionando registros ...");;
+
+aCab := {};;
+aadd(aCab,{"F1_TIPO","D",NIL});;
+aadd(aCab,{"F1_FORMUL" ,"S" ,NIL});;
+aadd(aCab,{"F1_DOC" ,cF1_DOC,NIL});;
+aadd(aCab,{"F1_SERIE" ,cF1_SERIE,NIL});;
+aadd(aCab,{"F1_EMISSAO" ,DDATABASE ,NIL});;
+aadd(aCab,{"F1_DTDIGIT" ,DDATABASE ,NIL});;
+aadd(aCab,{"F1_FORNECE" ,(aQuery[1][2]:cAlias)->C5_CLIENTE,NIL});;
+aadd(aCab,{"F1_LOJA" , (aQuery[1][2]:cAlias)->C5_LOJACLI,NIL});;
+aadd(aCab,{"F1_ESPECIE" ,cEspecie,NIL});;
+aadd(aCab,{"F1_COND" ,mv_par02,NIL});;
+aadd(aCab,{"F1_MENNOTA",mv_par03,NIL});;
+aadd(aCab,{"F1_PLIQUI" , (aQuery[1][2]:cAlias)->C5_PESOL,NIL});;
+aadd(aCab,{"F1_PBRUTO" , (aQuery[1][2]:cAlias)->C5_PBRUTO,NIL});;
+aadd(aCab,{"F1_VOLUME1" , (aQuery[1][2]:cAlias)->C5_VOLUME1,NIL});;
+aadd(aCab,{"F1_ESPECI1" , (aQuery[1][2]:cAlias)->C5_ESPECI1,NIL});;
+
+cD1_ITEM := "0001";;
+aSD1 := {};;
+MsAguarde({|| U_TRGWHILE("QRYSC6", ALLTRIM(M->PQ6_GDVPL), {}) },"Aguarde...","Montando os itens da Nf-E ...");;
+QRYSC6->(DbCloseArea());;
+
+MsAguarde({|| MsExecAuto( { | x, y | MATA103(x , y)}, aCab, aSD1, 3) },"Aguarde...","Gerando NF de entrada [" + cF1_DOC + "] ...");;
+
+cErro := U_GetAutoErro();;
+If(! Empty(cErro), U_MostraErro("Erro na inclusão da NF-E", cErro), MsgInfo("Nota Fiscal [" + SF1->F1_DOC + "] gerado com sucesso !"));;;SELECT C6_PRODUTO, C6_LOCAL, C6_QTDVEN, C6_PRCVEN, C6_VALOR, D2_DOC, D2_SERIE, D2_ITEM
+  FROM <ADVPL>RetSqlName("SC5")</ADVPL> SC5
+  JOIN <ADVPL>RetSqlName("SC6")</ADVPL> SC6 ON C6_FILIAL = C5_FILIAL AND C6_NUM = C5_NUM AND SC6.D_E_L_E_T_ = ' '
+  JOIN <ADVPL>RetSqlName("SD2")</ADVPL> SD2 ON D2_FILIAL = D2_FILIAL AND D2_DOC = C6_NOTA AND D2_SERIE = C6_SERIE AND D2_PEDIDO = C6_NUM AND D2_ITEMPV = C6_ITEM AND SD2.D_E_L_E_T_ = ' '
+ WHERE C5_FILIAL = '<ADVPL>xFilial("SC5")</ADVPL>' AND C5_NUM = '<ADVPL>(aQuery[1][2]:cAlias)->C5_NUM</ADVPL>' AND SC5.D_E_L_E_T_ = ' '
+ORDER BY D2_DOC,D2_SERIE,D2_ITEM;aItem := {};;
+aadd(aItem,{"D1_ITEM" ,cD1_ITEM ,NIL});;
+aadd(aItem,{"D1_COD" , QRYSC6->C6_PRODUTO ,NIL});;
+aadd(aItem,{"D1_UM" ,"UN" ,NIL});;
+aadd(aItem,{"D1_LOCAL" ,QRYSC6->C6_LOCAL,NIL});;
+aadd(aItem,{"D1_QUANT" ,QRYSC6->C6_QTDVEN,NIL}) ;;
+aadd(aItem,{"D1_VUNIT" ,QRYSC6->C6_PRCVEN ,NIL}) ;;
+aadd(aItem,{"D1_TOTAL" ,QRYSC6->C6_VALOR,NIL});;
+aadd(aItem,{"D1_TES" ,mv_par01,NIL});;
+aadd(aItem,{"D1_NFORI" ,QRYSC6->D2_DOC,NIL});;
+aadd(aItem,{"D1_SERIORI" ,QRYSC6->D2_SERIE,NIL});;
+aadd(aItem,{"D1_ITEMORI" ,QRYSC6->D2_ITEM,NIL});;
+cD1_ITEM := Soma1(cD1_ITEM);;
+Aadd(aSD1, AClone(aItem));;;;
+SC5FAT;04;2;Gerar Dados Exportacao;4;If(Empty((aQuery[1][2]:cAlias)->C5_NOTA), MsgInfo("Este pedido não foi fatura. Não é possível gerar o vinculo da exportação !"), .F.);;
+__EXIT := Empty((aQuery[1][2]:cAlias)->C5_NOTA);;
+
+aParam := {};;
+Aadd(aParam, {1, "Cod Pais",Space(3),"999",'','','',3,.T.});;
+Aadd(aParam, {1, "Uf de Embarque",Space(2),"@!",'ExistCpo("SX5","12"+mv_par02)','12','',3,.T.});;
+Aadd(aParam, {1, "Local de Embarque",Space(Len(CDL->CDL_LOCEMB)),"@!",'','','',60,.T.});;
+Aadd(aParam, {1, "Nf Remessa",Space(Len(SF2->F2_DOC)),"@!",'ExistCpo("SF2",mv_par04)','SF2','',3,.T.});;
+Aadd(aParam, {1, "Serie Remessa",SF2->F2_SERIE,"@!",'','01','',3,.T.});;
+Aadd(aParam, {1, "Tipo Conhecimento","10","@!",'ExistCpo("SX5","SV"+mv_par07)','SV','',3,.T.});;
+
+__EXIT := ! ParamBox(aParam, "Parametros da rotina",, {|| AllwaysTrue()},,,,,,, .F.);;
+
+SF2->(DbSetOrder(1));;
+SF2->(DbSeek(xFilial() + mv_par04 + mv_par05));;    
+
+LjMsgRun("Gerando vinculo da exportacao...","Aguarde",{|| U_ExecSQL(M->PQ6_SQL) });;;INSERT INTO <ADVPL>RetSqlName("CDL")</ADVPL>(CDL_FILIAL, CDL_PAIS, CDL_UFEMB, CDL_LOCEMB, CDL_DOC, CDL_NUMDE, CDL_NRREG, CDL_NFEXP, CDL_SERIE, CDL_SEREXP, 
+       CDL_SDOC, CDL_SDOCEX, CDL_ESPEXP, CDL_ESPEC, CDL_CLIENT, CDL_LOJA, CDL_INDDOC, CDL_NATEXP, CDL_DTDE, CDL_DTCHC, CDL_DTAVB, CDL_DTREG, CDL_EMIEXP, 
+       CDL_FORNEC, CDL_LOJFOR, CDL_DOCORI, CDL_SERORI, CDL_SDOCOR, CDL_CHVEX2, CDL_CHVEXP, CDL_ITEMNF, CDL_PRODNF, CDL_PRDORI, CDL_ITEORI, CDL_TPCHC, R_E_C_N_O_) 
+SELECT '<ADVPL>xFilial("CDL")</ADVPL>', '<ADVPL>mv_par01</ADVPL>', '<ADVPL>mv_par02</ADVPL>', '<ADVPL>mv_par03</ADVPL>', '<ADVPL>SC5->C5_NOTA</ADVPL>', 
+       '<ADVPL>SC5->C5_NOTA</ADVPL>', '<ADVPL>SC5->C5_NOTA</ADVPL>', '<ADVPL>SC5->C5_NOTA</ADVPL>', '<ADVPL>SC5->C5_SERIE</ADVPL>', '<ADVPL>SC5->C5_SERIE</ADVPL>', 
+       '<ADVPL>SC5->C5_SERIE</ADVPL>', '<ADVPL>SC5->C5_SERIE</ADVPL>', 'SPED', 'SPED', '<ADVPL>SC5->C5_CLIENTE</ADVPL>', '<ADVPL>SC5->C5_LOJACLI</ADVPL>', 
+       '2', '1', '<ADVPL>Dtos(dDataBase)</ADVPL>', '<ADVPL>Dtos(dDataBase)</ADVPL>', '<ADVPL>Dtos(dDataBase)</ADVPL>', '<ADVPL>Dtos(dDataBase)</ADVPL>', 
+       '<ADVPL>Dtos(dDataBase)</ADVPL>', F1_FORNECE, F1_LOJA, F1_DOC, F1_SERIE, F1_SERIE, '<ADVPL>SF2->F2_CHVNFE</ADVPL>', F1_CHVNFE, D2_ITEM, D2_COD, D1_COD,
+       D1_ITEM, '<ADVPL>mv_par06</ADVPL>', ROW_NUMBER() OVER (ORDER BY SD2.R_E_C_N_O_) + COALESCE((SELECT MAX(R_E_C_N_O_) + 1 FROM <ADVPL>RetSqlName("CDL")</ADVPL>), 1)
+  FROM <ADVPL>RetSqlName("SD2")</ADVPL> SD2
+  JOIN <ADVPL>RetSqlName("SD1")</ADVPL> SD1 ON D1_FILIAL = D2_FILIAL AND D1_DOC = D2_NFORI AND D1_SERIE = D2_SERIORI AND D1_ITEM = D2_ITEMORI
+   AND D1_COD = D2_COD AND SD1.D_E_L_E_T_ = ' '
+  JOIN <ADVPL>RetSqlName("SF1")</ADVPL> SF1 ON F1_FILIAL = D2_FILIAL AND F1_DOC = D1_DOC AND F1_SERIE = D1_SERIE AND F1_FORNECE = D1_FORNECE 
+   AND F1_LOJA = D1_LOJA AND SF1.D_E_L_E_T_ = ' '
+ WHERE D2_FILIAL = '<ADVPL>xFilial("SD2")</ADVPL>' AND D2_DOC = '<ADVPL>mv_par04</ADVPL>' AND D2_SERIE = '<ADVPL>mv_par05</ADVPL>' AND SD2.D_E_L_E_T_ = ' ';;;
+SC5FAT;05;2;Informar Numero Declaracao Exportacao;4;If(Empty((aQuery[1][2]:cAlias)->C5_NOTA), MsgInfo("Este pedido não foi fatura. Não é possível gerar o vinculo da exportação !"), .F.);;
+__EXIT := Empty((aQuery[1][2]:cAlias)->C5_NOTA);;
+
+aParam := {};;
+Aadd(aParam, {1, "Numero Declaração",Space(Len(CDL->CDL_NUMDE)),"@!",'.T.','','',50,.T.});;
+
+__EXIT := ! ParamBox(aParam, "Parametros da rotina",, {|| AllwaysTrue()},,,,,,, .F.);;
+
+SF2->(DbSetOrder(1));;
+SF2->(DbSeek(xFilial() + mv_par04 + mv_par05));;    
+
+LjMsgRun("Preenchendo número da declaração de exportacao...","Aguarde",{|| U_ExecSQL(M->PQ6_SQL) });;;UPDATE <ADVPL>RetSqlName("SC6")</ADVPL> SET C6_NUMDE = '<ADVPL>mv_par01</ADVPL>' 
+ WHERE C6_FILIAL = '<ADVPL>xFilial("SC6")</ADVPL>' AND C6_NOTA = '<ADVPL>(aQuery[1][2]:cAlias)->C5_NOTA</ADVPL>' 
+   AND C6_SERIE = '<ADVPL>(aQuery[1][2]:cAlias)->C5_SERIE</ADVPL>' AND D_E_L_E_T_ = ' ';;
+UPDATE <ADVPL>RetSqlName("SD2")</ADVPL> SET D2_NUMDE = '<ADVPL>mv_par01</ADVPL>' 
+ WHERE D2_FILIAL = '<ADVPL>xFilial("SD2")</ADVPL>' AND D2_DOC = '<ADVPL>(aQuery[1][2]:cAlias)->C5_NOTA</ADVPL>' 
+   AND D2_SERIE = '<ADVPL>(aQuery[1][2]:cAlias)->C5_SERIE</ADVPL>' AND D_E_L_E_T_ = ' ';;
+UPDATE <ADVPL>RetSqlName("CDL")</ADVPL> SET CDL_NUMDE = '<ADVPL>mv_par01</ADVPL>' 
+ WHERE CDL_FILIAL = '<ADVPL>xFilial("CDL")</ADVPL>' AND CDL_DOC = '<ADVPL>(aQuery[1][2]:cAlias)->C5_NOTA</ADVPL>' 
+   AND CDL_SERIE = '<ADVPL>(aQuery[1][2]:cAlias)->C5_SERIE</ADVPL>' AND D_E_L_E_T_ = ' ';;;
+SD1;01;2;Pesquisar;1;AxPesqui()
+;;;;
+SD1;02;2;Visualizar;2;SD1->(DbGoto((aQuery[2][2]:Alias())->(Recno())))
+AxVisual("SD1", SD1->(Recno()), 2);;;;
+SD1;03;2;Alterar TES;2;bRefresh := { || .T. }
+aFields := { "D1_DOC", "D1_SERIE", "D1_FORNECE", "D1_LOJA", "D1_ITEM", "D1_COD", "D1_QUANT", "D1_TOTAL", "D1_TES", "NOUSER" }
+aEdit   := { "D1_TES" }
+SD1->(DbGoto((aQuery[2][2]:Alias())->(Recno())))
+aParam  := { { || .T. }, { || U_VLDSD1TS() }, { || Processa( { || Mata930(.T., { Dtoc(SD1->D1_DTDIGIT), Dtoc(SD1->D1_DTDIGIT), 1, SD1->D1_DOC, SD1->D1_DOC, SD1->D1_SERIE, SD1->D1_SERIE, SD1->D1_FORNECE, SD1->D1_FORNECE, SD1->D1_LOJA, SD1->D1_LOJA }) }) }, { || __REFRESH := .T. } };;
+SD1->(AxAltera("SD1", SD1->(Recno()), 4, aFields, aEdit, , , , , , , aParam));;;;
+SD2;01;2;Pesquisar;1;AxPesqui();;;;
+SD2;02;2;Visualizar;2;SD2->(DbGoto((aQuery[2][2]:Alias())->(RECNO)))
+AxVisual("SD2", SD2->(Recno()), 2);;;;
+SD2;03;2;Alterar TES;4;aFields := { "D2_DOC", "D2_SERIE", "D2_FORNECE", "D2_LOJA", "D2_ITEM", "D2_COD", "D2_QUANT", "D2_TOTAL", "D2_TES", "NOUSER" }
+aEdit   := { "D2_TES" }
+bRefresh := { || .T. }
+SD2->(DbGoto((aQuery[2][2]:Alias())->(RECNO)))
+aParam  := { { || .T. }, { || U_VLDSD2TS() }, { || Processa( { || Mata930(.T., { Dtoc(SD2->D2_EMISSAO), Dtoc(SD2->D2_EMISSAO), 2, SD2->D2_DOC, SD2->D2_DOC, SD2->D2_SERIE, SD2->D2_SERIE, SD2->D2_CLIENTE, SD2->D2_CLIENTE, SD2->D2_LOJA, SD2->D2_LOJA }) } ) }, { || __REFRESH := .T. } };;
+SD2->(AxAltera("SD2", SD2->(Recno()), 4, aFields, aEdit, , , , , , , aParam));;;;
+SE1AGG;01;2;Pesquisar;0;AxPesqui();;;;
+SE2;01;2;Pesquisar;1;AxPesqui();;;;
+SE2;02;2;Visualizar;2;SE2->(DbGoto((aQuery[1][2]:Alias())->(Recno)))
+
+FA050Visua("SE2", SE2->(Recno()), 2);;;;
+SE2;03;2;Recontabilizar;4;SE2->(DbGoto((aQuery[1][2]:Alias())->(Recno)))
+
+__EXIT  := If(Empty(SE2->E2_LA), (MsgInfo("O documento [" + SE2->E2_NUM + "] ainda nao foi contabilizada !"), .T.), .F.)
+
+__EXIT := ! MsgYesNo("Confirma a limpeza da contabilização do documento [" + SE2->E2_NUM + "] ?")
+RecLock("SE2", .F.)
+SE2->E2_LA := " "
+MsUnLock()
+__REFRESH := .T.;;;;
+SE2;04;2;Recontabilizar Lote;3;__LEXIT := ! ParamBox({ {1, "Data Inicial",dDataBase,"@D",'.T.','','',55,.T.}, {1, "Data Final",dDataBase,"@D",'.T.','','',55,.T.} }, "Parametros da rotina",, {|| AllwaysTrue()},,,,,,, .F.)
+
+MsAguarde({|| U_ExecSQL(M->PQ6_SQL) },"Aguarde...","Executando [" + cTitulo + "]")
+__REFRESH := .T.;UPDATE <ADVPL>RetSqlName("SE2")</ADVPL> SET E2_LA = ' ' WHERE E2_FILIAL = '<ADVPL>xFilial("SE2")</ADVPL>' AND E2_EMIS1 BETWEEN '<ADVPL>Dtos(mv_par01)</ADVPL>' AND '<ADVPL>Dtos(mv_par02)</ADVPL>' AND D_E_L_E_T_ = ' ';;;
+SE2;05;2;Contabilizar;2;Fina370()
+__REFRESH := .T.;;;;
+SE2AGG;01;2;Pesquisar;0;AxPesqui();;;;
+SE5;01;2;Pesquisar;1;AxPesqui();;;;
+SE5;02;2;Visualizar;2;SE5->(DbGoto((aQuery[1][2]:Alias())->(Recno)))
+SE5->(AxVisual("SE5", SE5->(Recno()), 2));;;;
+SE5;03;2;Situacao Conferencia;4;bRefresh := { || .T. }
+aFields := { "E5_DTDIGIT", "E5_DATA", "E5_DTDISPO", "E5_TIPO", "E5_RECPAGD", "E5_PREFIXO", "E5_NUMERO", "E5_PARCELA", "E5_CLIFOR", "E5_LOJA", "E5_BENEF", "E5_VALOR", "E5_VLJUROS", "E5_VLMULTA", "E5_VLDESCO", "E5_HISTOR", "E5_BANCO", "E5_AGENCIA", "E5_CONTA", "E5_XCTB", "NOUSER" }
+aEdit   := { "E5_XCTB" }
+SE5->(DbGoto((aQuery[1][2]:Alias())->(Recno)))
+aParam  := { { || .T. }, { || .T. }, { || .T. }, { || __REFRESH := .T. } };;
+SE5->(AxAltera("SE5", SE5->(Recno()), 4, aFields, aEdit, , , , , , , aParam));;;;
+SE5;04;2;Recontabilizar;4;SE5->(DbGoto((aQuery[1][2]:Alias())->(Recno)))
+
+__EXIT  := If(SE5->E5_LA <> "S", (MsgInfo("O movimento [" + If(! Empty(SE5->E5_NUMERO), SE5->E5_NUMERO, AllTrim(SE5->E5_HISTOR)) + "] ainda nao foi contabilizado !"), .T.), .F.)
+
+__EXIT := ! MsgYesNo("Confirma a limpeza da data de contabilização da nota [" + If(! Empty(SE5->E5_NUMERO), SE5->E5_NUMERO, AllTrim(SE5->E5_HISTOR)) + "] ?")
+RecLock("SE5", .F.)
+SE5->E5_LA := " "
+MsUnLock()
+__REFRESH := .T.;;;;
+SE5;05;2;Recontabilizar Lote;4;__LEXIT := ! ParamBox({ {1, "Data Inicial",dDataBase,"@D",'.T.','','',55,.T.}, {1, "Data Final",dDataBase,"@D",'.T.','','',55,.T.} }, "Parametros da rotina",, {|| AllwaysTrue()},,,,,,, .F.)
+
+MsAguarde({|| U_ExecSQL(M->PQ6_SQL) },"Aguarde...","Executando [" + cTitulo + "]")
+__REFRESH := .T.;UPDATE <ADVPL>RetSqlName("SE5")</ADVPL> SET E5_LA = ' ' WHERE E5_FILIAL = '<ADVPL>xFilial("SE5")</ADVPL>' AND E5_DTDIGIT BETWEEN '<ADVPL>Dtos(mv_par01)</ADVPL>' AND '<ADVPL>Dtos(mv_par02)</ADVPL>' AND D_E_L_E_T_ = ' ';;;
+SERVIC;01;2;Pesquisar;1;AxPesqui();;;;
+SERVIC;02;2;Importar CSV Ginfes;3;MsAguarde({|| U_ExecSQL('DELETE FROM <ADVPL>aQuery[1][2]:cArqTrb</ADVPL>') },"Aguarde...","Deletando importacao anterior")
+
+lChkFields := .F.;;
+aFldCsv := {};;
+Aadd(aFldCsv, { "RAZAO","RAZAOSOCIAL" });;
+Aadd(aFldCsv, { "CNPJ", "CPF/CNPJ" });;
+Aadd(aFldCsv, { "COMPLEME", "COMPLEMENTO" });;
+Aadd(aFldCsv, { "ATIVIDADE", "ATIVIDADE/SERVICO" });;
+Aadd(aFldCsv, { "RECEITA", "RECEITABRUTA" });;
+Aadd(aFldCsv, { "DATAHORA", "DATAINSERCAO" });;
+Aadd(aFldCsv, { "BASE", "BASEDECALCULO" });;
+nTypeImp := 2;;
+__ALIAS := aQuery[1][2]:cAlias;;
+U_TRGXLCSV();;
+MsAguarde({|| U_ExecSQL(M->PQ6_SQL) },"Aguarde...","Atribuindo status de importacao");;
+
+TCRefresh(aQuery[1][2]:cArqTrb);;;UPDATE <ADVPL>aQuery[1][2]:cArqTrb</ADVPL> 
+   SET STATUS = CASE WHEN EXISTS(SELECT 1 FROM <ADVPL>RetSqlName("SF2")</ADVPL> SF2 
+                                     WHERE F2_FILIAL = '<ADVPL>xFilial("SF2")</ADVPL>' AND F2_SERIE = '<ADVPL>mv_par01</ADVPL>'
+                                       AND F2_DOC = <ADVPL>aQuery[1][2]:cArqTrb</ADVPL>.NFINICIAL AND F2_ESPECIE = 'NFS'
+                                       AND D_E_L_E_T_ = ' ') THEN '3' 
+                     WHEN NOT EXISTS(SELECT 1 FROM <ADVPL>RetSqlName("SB1")</ADVPL> SB1
+                                      WHERE B1_FILIAL = '<ADVPL>xFilial("SB1")</ADVPL>' 
+                                        AND CASE WHEN B1_TRIBMUN <> ' ' AND B1_TRIBMUN = <ADVPL>aQuery[1][2]:cArqTrb</ADVPL>.ATIVIDADE THEN 1=1
+                                                 WHEN B1_TRIBMUN = ' ' AND B1_CODISS = <ADVPL>aQuery[1][2]:cArqTrb</ADVPL>.ATIVIDADE THEN 1=1 ELSE 1 = 2 END
+                                        AND D_E_L_E_T_ = ' ') THEN '2' 
+                WHEN LENGTH(<ADVPL>aQuery[1][2]:cArqTrb</ADVPL>.CNPJ) <> 11 OR LENGTH(<ADVPL>aQuery[1][2]:cArqTrb</ADVPL>.CNPJ) <> 14 THEN '4'
+                     ELSE '1' END,  CEP = CASE WHEN CEP = ' ' THEN CEP ELSE STRZERO(CAST(CEP AS INTEGER), 8) END,
+       A1_COD = COALESCE((SELECT MAX(A1_COD) FROM <ADVPL>RetSqlName("SA1")</ADVPL> SA1 
+	                   WHERE SA1.A1_FILIAL = '<ADVPL>xFilial("SA1")</ADVPL>' AND SA1.A1_CGC = <ADVPL>aQuery[1][2]:cArqTrb</ADVPL>.CNPJ 
+                             AND SA1.D_E_L_E_T_ = ' ' ), CASE WHEN CNPJ = ' ' THEN '000000' ELSE A1_COD END);;;
+SERVIC;03;2;Importar CSV Sao Paulo;3;MsAguarde({|| U_ExecSQL('DELETE FROM <ADVPL>aQuery[1][2]:cArqTrb</ADVPL>') },"Aguarde...","Deletando importacao anterior")
+
+lChkFields := .F.;;
+lNumVir := .T.;;
+aFldCsv := {};;
+Aadd(aFldCsv, { "TIPO","Tipo de Registro" });;
+Aadd(aFldCsv, { "NFINICIAL","Nº NFS-e" });;
+Aadd(aFldCsv, { "RAZAO","Razão Social do Prestador" });;
+Aadd(aFldCsv, { "CNPJ", "CPF/CNPJ do Prestador" });;
+Aadd(aFldCsv, { "ENDERECO", "Endereço do Prestador" });;
+Aadd(aFldCsv, { "NUMERO", "Número do Endereço do Prestador" });;
+Aadd(aFldCsv, { "COMPLEME", "Complemento do Endereço do Prestador" });;
+Aadd(aFldCsv, { "BAIRRO", "Bairro do Prestador" });;
+Aadd(aFldCsv, { "CEP", "CEP do Prestador" });;
+Aadd(aFldCsv, { "CIDADE", "Cidade do Prestador" });;
+Aadd(aFldCsv, { "ESTADO", "UF do Prestador" });;
+Aadd(aFldCsv, { "ATIVIDADE", "Código do Serviço Prestado na Nota Fiscal" });;
+Aadd(aFldCsv, { "RECEITA", "Valor dos Serviços" });;
+Aadd(aFldCsv, { "DATAHORA", "Data Hora NFE" });;
+Aadd(aFldCsv, { "ALIQUOTA", "Alíquota" });;
+Aadd(aFldCsv, { "IMPOSTO", "ISS devido" });;
+nTypeImp := 2;;
+__ALIAS := aQuery[1][2]:cAlias;;
+U_TRGXLCSV();;
+MsAguarde({|| U_ExecSQL(M->PQ6_SQL) },"Aguarde...","Atribuindo status de importacao");;
+
+TCRefresh(aQuery[1][2]:cArqTrb);;;UPDATE <ADVPL>aQuery[1][2]:cArqTrb</ADVPL> 
+   SET STATUS = CASE WHEN EXISTS(SELECT 1 FROM <ADVPL>RetSqlName("SF2")</ADVPL> SF2 
+                                     WHERE F2_FILIAL = '<ADVPL>xFilial("SF2")</ADVPL>' AND F2_SERIE = '<ADVPL>mv_par01</ADVPL>'
+                                       AND F2_DOC = <ADVPL>aQuery[1][2]:cArqTrb</ADVPL>.NFINICIAL AND F2_ESPECIE = 'NFS'
+                                       AND D_E_L_E_T_ = ' ') THEN '3' 
+                     WHEN NOT EXISTS(SELECT 1 FROM <ADVPL>RetSqlName("SB1")</ADVPL> SB1
+                                      WHERE B1_FILIAL = '<ADVPL>xFilial("SB1")</ADVPL>' 
+                                        AND CASE WHEN B1_TRIBMUN <> ' ' AND B1_TRIBMUN = <ADVPL>aQuery[1][2]:cArqTrb</ADVPL>.ATIVIDADE THEN 1=1
+                                                 WHEN B1_TRIBMUN = ' ' AND B1_CODISS = <ADVPL>aQuery[1][2]:cArqTrb</ADVPL>.ATIVIDADE THEN 1=1 ELSE 1 = 2 END
+                                        AND D_E_L_E_T_ = ' ') THEN '2' 
+                     WHEN LENGTH(<ADVPL>aQuery[1][2]:cArqTrb</ADVPL>.CNPJ) <> 11 OR LENGTH(<ADVPL>aQuery[1][2]:cArqTrb</ADVPL>.CNPJ) <> 14 THEN '4'
+                     ELSE '1' END,  
+       CEP = CASE WHEN CEP = ' ' THEN CEP ELSE STRZERO(CAST(REPLACE(CEP, '-', '') AS INTEGER), 8) END,
+       CNPJ = REPLACE(REPLACE(REPLACE(CNPJ, '.', ''), '/', ''), '-', ''),
+       A1_COD = COALESCE((SELECT MAX(A1_COD) FROM <ADVPL>RetSqlName("SA1")</ADVPL> SA1 
+	                   WHERE SA1.A1_FILIAL = '<ADVPL>xFilial("SA1")</ADVPL>' AND SA1.A1_CGC = REPLACE(REPLACE(REPLACE(<ADVPL>aQuery[1][2]:cArqTrb</ADVPL>.CNPJ, '.', ''), '/', ''), '-', '')
+                             AND SA1.D_E_L_E_T_ = ' ' ), CASE WHEN CNPJ = ' ' THEN '000000' ELSE A1_COD END),
+       BASE = CASE WHEN ALIQUOTA > 0 AND IMPOSTO > 0 THEN RECEITA ELSE 0 END;;
+DELETE FROM <ADVPL>aQuery[1][2]:cArqTrb</ADVPL> WHERE SUBSTRING(TIPO, 1, 1) = 'T';;;;;
+SERVIC;04;2;Gerar Nota;4;__A1_COD := U_TRGetSQL("MAX(A1_COD)", RetSqlName("SA1"), "A1_FILIAL = '" + xFilial("SA1") + "' AND D_E_L_E_T_ = ' '");;
+__A1_COD := IF(Empty(__A1_COD),  "000001", __A1_COD);;
+MsAguarde({|| U_ExecSQL(M->PQ6_SQL) },"Aguarde...","Gerando Clientes e Notas");;
+MsAguarde({|| U_ExecSQL(M->PQ6_GSQL) },"Aguarde...","Atribuindo status de importacao");;
+
+TCRefresh(aQuery[1][2]:cArqTrb);;
+;INSERT INTO <ADVPL>RetSqlName("SA1")</ADVPL>(A1_FILIAL, A1_COD, A1_LOJA, A1_NOME, A1_NREDUZ, A1_CGC, A1_PESSOA, A1_TIPO, A1_DTNASC, A1_END, A1_COMPLEM, 
+       A1_CEP, A1_BAIRRO, A1_COD_MUN, A1_MUN, A1_EST, R_E_C_N_O_)
+SELECT '<ADVPL>xFilial("SA1")</ADVPL>', 
+       STRZERO((<ADVPL>__A1_COD</ADVPL> + ROW_NUMBER() OVER (ORDER BY TMP.CNPJ))::numeric, 6) AS A1_COD, '01' AS A1_LOJA, MIN(RAZAO) AS A1_NOME, 
+       SUBSTRING(MIN(RAZAO), 1, 20) AS A1_NEDUZ, CNPJ, CASE WHEN LENGTH(CNPJ) = 14 THEN 'J' ELSE 'F' END AS A1_PESSOA, 'F', '<ADVPL>Dtos(dDataBase)</ADVPL>',
+       RTRIM(LTRIM(MIN(ENDERECO))) || CASE WHEN MIN(NUMERO) <> ' ' THEN ', ' || MIN(NUMERO) ELSE '' END AS A1_END, MIN(COMPLEME), MIN(CEP), MIN(BAIRRO), 
+       COALESCE(MIN(CC2_CODMUN), ' ') AS A1_COD_MUN, UPPER(MIN(CIDADE)), UPPER(MIN(ESTADO)), 
+       ROW_NUMBER() OVER (ORDER BY TMP.CNPJ) + COALESCE((SELECT MAX(R_E_C_N_O_) FROM <ADVPL>RetSqlName("SA1")</ADVPL>), 0) AS R_E_C_N_O_
+  FROM <ADVPL>aQuery[1][2]:cArqTrb</ADVPL> TMP
+  LEFT JOIN <ADVPL>RetSqlName("CC2")</ADVPL> CC2 ON CC2_FILIAL = '<ADVPL>xFilial("CC2")</ADVPL>' AND CC2_EST = ESTADO AND CC2_MUN = CIDADE AND CC2.D_E_L_E_T_ = ''
+ WHERE STATUS = '1' AND A1_COD = ' ' AND CNPJ <> ' '
+ GROUP BY CNPJ
+ ORDER BY TMP.CNPJ;;
+<ADVPL>U_ParserADV(M->PQ6_GSQL)</ADVPL>;;
+INSERT INTO <ADVPL>RetSqlName("SF2")</ADVPL>(F2_FILIAL, F2_DOC, F2_SERIE, F2_EMISSAO, F2_CLIENTE, F2_LOJA, F2_PREFIXO, F2_DUPL, F2_ESPECIE, F2_VAlBRUT,
+            F2_BASEISS, F2_VALISS, R_E_C_N_O_)
+SELECT '<ADVPL>xFilial("SF2")</ADVPL>' AS F2_FILIAL, NFINICIAL AS F2_DOC, '<ADVPL>mv_par01</ADVPL>' AS F2_SERIE, 
+       SUBSTRING(DATAHORA, 7, 4) || SUBSTRING(DATAHORA, 4, 2) || SUBSTRING(DATAHORA, 1, 2) AS F2_EMISSAO, A1_COD AS F2_CLIENTE, '01' AS F2_LOJA, 
+       '<ADVPL>mv_par01</ADVPL>' AS F2_PREFIXO, NFINICIAL AS F2_DUPL, 'NFS' AS F2_ESPECIE, RECEITA AS F2_VALBRUT, BASE AS F2_BASEISS, IMPOSTO AS F2_VALISS,
+       ROW_NUMBER() OVER (ORDER BY TMP.NFINICIAL) + COALESCE((SELECT MAX(R_E_C_N_O_) FROM <ADVPL>RetSqlName("SF2")</ADVPL>), 0) AS R_E_C_N_O_
+  FROM <ADVPL>aQuery[1][2]:cArqTrb</ADVPL> TMP
+ WHERE STATUS = '1' AND A1_COD <> ' '
+ ORDER BY NFINICIAL;;
+INSERT INTO <ADVPL>RetSqlName("SD2")</ADVPL>(D2_FILIAL, D2_DOC, D2_SERIE, D2_TIPO, D2_EMISSAO, D2_CLIENTE, D2_LOJA, D2_COD, D2_ITEM, D2_QUANT, D2_PRCVEN, D2_TOTAL, 
+       D2_CODISS,D2_BASEISS, D2_ALIQISS, D2_VALISS, R_E_C_N_O_)
+SELECT '<ADVPL>xFilial("SD2")</ADVPL>' AS D2_FILIAL, NFINICIAL AS D2_DOC, '<ADVPL>mv_par01</ADVPL>' AS D2_SERIE, 'N' AS D2_TIPO,
+       SUBSTRING(DATAHORA, 7, 4) || SUBSTRING(DATAHORA, 4, 2) || SUBSTRING(DATAHORA, 1, 2) AS D2_EMISSAO, A1_COD AS D2_CLIENTE, '01' AS D2_LOJA, B1_COD, 
+       '01' AS D2_ITEM, 1 AS D2_QUANT, RECEITA AS D2_PRCVEN, RECEITA AS D2_TOTAL, B1_CODISS AS D2_CODISS, BASE AS D2_BASEISS, ALIQUOTA AS D2_ALIQISS, 
+       IMPOSTO AS D2_VALISS, ROW_NUMBER() OVER (ORDER BY TMP.NFINICIAL) + COALESCE((SELECT MAX(R_E_C_N_O_) FROM <ADVPL>RetSqlName("SD2")</ADVPL>), 0) AS R_E_C_N_O_
+  FROM <ADVPL>aQuery[1][2]:cArqTrb</ADVPL> TMP
+  JOIN <ADVPL>RetSqlName("SB1")</ADVPL> SB1 ON B1_FILIAL = '<ADVPL>xFilial("SB1")</ADVPL>' 
+   AND CASE WHEN B1_TRIBMUN <> ' ' AND B1_TRIBMUN = TMP.ATIVIDADE THEN 1=1
+            WHEN B1_TRIBMUN = ' ' AND B1_CODISS = TMP.ATIVIDADE THEN 1=1 ELSE 1 = 2 END AND SB1.D_E_L_E_T_ = ' '
+ WHERE STATUS = '1' AND A1_COD <> ' '
+ ORDER BY NFINICIAL;;
+INSERT INTO <ADVPL>RetSqlName("SE1")</ADVPL>(E1_FILIAL, E1_NUM, E1_PREFIXO, E1_EMISSAO, E1_CLIENTE, E1_LOJA, E1_VALOR, E1_VLCRUZ, E1_SALDO, 
+       E1_VENCTO, E1_VENCREA, E1_VENCORI, E1_STATUS, E1_ISS, E1_SERIE, E1_SDOC, E1_ORIGEM, R_E_C_N_O_)
+SELECT '<ADVPL>xFilial("SE1")</ADVPL>' AS E1_FILIAL, NFINICIAL AS E1_NUM, '<ADVPL>mv_par01</ADVPL>' AS E1_PREFIXO, 
+       SUBSTRING(DATAHORA, 7, 4) || SUBSTRING(DATAHORA, 4, 2) || SUBSTRING(DATAHORA, 1, 2) AS E1_EMISSAO, A1_COD AS E1_CLIENTE, '01' AS E1_LOJA, 
+       RECEITA AS E1_VALOR, RECEITA AS E1_VLRCRUZ, RECEITA AS E1_SALDO, 
+       SUBSTRING(DATAHORA, 7, 4) || SUBSTRING(DATAHORA, 4, 2) || SUBSTRING(DATAHORA, 1, 2) AS E1_VENCTO, 
+       SUBSTRING(DATAHORA, 7, 4) || SUBSTRING(DATAHORA, 4, 2) || SUBSTRING(DATAHORA, 1, 2) AS E1_VENCREA, 
+       SUBSTRING(DATAHORA, 7, 4) || SUBSTRING(DATAHORA, 4, 2) || SUBSTRING(DATAHORA, 1, 2) AS E1_VENCORI, 'A' AS E1_STATUS, IMPOSTO AS E1_ISS, 
+       '<ADVPL>mv_par01</ADVPL>' AS E1_SERIE, '<ADVPL>mv_par01</ADVPL>' AS E1_SDOC, 'MATA460' AS E1_ORIGEM,
+       ROW_NUMBER() OVER (ORDER BY TMP.NFINICIAL) + COALESCE((SELECT MAX(R_E_C_N_O_) FROM <ADVPL>RetSqlName("SE1")</ADVPL>), 0) AS R_E_C_N_O_
+  FROM <ADVPL>aQuery[1][2]:cArqTrb</ADVPL> TMP
+ WHERE STATUS = '1' AND A1_COD <> ' '
+ ORDER BY NFINICIAL;;;;UPDATE <ADVPL>aQuery[1][2]:cArqTrb</ADVPL> 
+   SET STATUS = CASE WHEN EXISTS(SELECT 1 FROM <ADVPL>RetSqlName("SF2")</ADVPL> SF2 
+                                     WHERE F2_FILIAL = '<ADVPL>xFilial("SF2")</ADVPL>' AND F2_SERIE = '<ADVPL>mv_par01</ADVPL>'
+                                       AND F2_DOC = <ADVPL>aQuery[1][2]:cArqTrb</ADVPL>.NFINICIAL AND F2_ESPECIE = 'NFS'
+                                       AND D_E_L_E_T_ = ' ') THEN '3' 
+                     WHEN NOT EXISTS(SELECT 1 FROM <ADVPL>RetSqlName("SB1")</ADVPL> SB1
+                                      WHERE B1_FILIAL = '<ADVPL>xFilial("SB1")</ADVPL>' 
+                                        AND CASE WHEN B1_TRIBMUN <> ' ' AND B1_TRIBMUN = <ADVPL>aQuery[1][2]:cArqTrb</ADVPL>.ATIVIDADE THEN 1=1
+                                                 WHEN B1_TRIBMUN = ' ' AND B1_CODISS = <ADVPL>aQuery[1][2]:cArqTrb</ADVPL>.ATIVIDADE THEN 1=1 ELSE 1 = 2 END
+                                        AND D_E_L_E_T_ = ' ') THEN '2' ELSE '1' END,  CEP = CASE WHEN CEP = ' ' THEN CEP ELSE STRZERO(CAST(CEP AS INTEGER), 8) END,
+       A1_COD = COALESCE((SELECT MAX(A1_COD) FROM <ADVPL>RetSqlName("SA1")</ADVPL> SA1 
+	                   WHERE SA1.A1_FILIAL = '<ADVPL>xFilial("SA1")</ADVPL>' AND SA1.A1_CGC = <ADVPL>aQuery[1][2]:cArqTrb</ADVPL>.CNPJ 
+                             AND SA1.D_E_L_E_T_ = ' ' ), CASE WHEN CNPJ = ' ' THEN '000000' ELSE A1_COD END);
+SERVIC;05;4;Buscar Prefeitura;3;MsAguarde({|| U_TGERREST("000002", "000003", __PQ1_ID) },"Aguarde...","Executando [" + cTitulo + "]")
+__REFRESH := .T.;;;;
+SF1;01;2;Pesquisar;1;AxPesqui();;;;
+SF1;02;2;Visualizar;2;SF1->(DbGoto((aQuery[1][2]:Alias())->(Recno)))
+
+A103NFiscal("SF1", SF1->(Recno()), 2);;;;
+SF1;03;2;Situacao Conferencia;4;bRefresh := { || .T. }
+aFields := { "F1_DOC", "F1_SERIE", "F1_FORNECE", "F1_LOJA", "A2_NOME", "F1_XFSC", "F1_XCTB", "NOUSER" }
+aEdit   := { "F1_XFSC", "F1_XCTB" }
+SF1->(DbGoto((aQuery[1][2]:Alias())->(Recno)))
+aParam  := { { || .T. }, { || .T. }, { || .T. }, { || __REFRESH := .T. } };;
+SF1->(AxAltera("SF1", SF1->(Recno()), 4, aFields, aEdit, , , , , , , aParam));;;;
+SF1;04;2;Recontabilizar;4;SF1->(DbGoto((aQuery[1][2]:Alias())->(Recno)))
+
+__EXIT  := If(Empty(SF1->F1_DTLANC), (MsgInfo("A nota [" + SF1->F1_DOC + "] ainda nao foi contabilizada !"), .T.), .F.)
+
+__EXIT := ! MsgYesNo("Confirma a limpeza da data de contabilização da nota [" + SF1->F1_DOC + "] ?")
+RecLock("SF1", .F.)
+SF1->F1_DTLANC := Ctod("")
+MsUnLock()
+__REFRESH := .T.;;;;
+SF1;05;2;Recontabilizar Lote;4;__LEXIT := ! ParamBox({ {1, "Data Inicial",dDataBase,"@D",'.T.','','',55,.T.}, {1, "Data Final",dDataBase,"@D",'.T.','','',55,.T.} }, "Parametros da rotina",, {|| AllwaysTrue()},,,,,,, .F.)
+
+MsAguarde({|| U_ExecSQL(M->ZAD_SQL) },"Aguarde...","Executando [" + cTitulo + "]")
+__REFRESH := .T.;UPDATE <ADVPL>RetSqlName("SF1")</ADVPL> SET F1_DTLANC = ' ' WHERE F1_FILIAL = '<ADVPL>xFilial("SF1")</ADVPL>' AND F1_DTDIGIT BETWEEN '<ADVPL>Dtos(mv_par01)</ADVPL>' AND '<ADVPL>Dtos(mv_par02)</ADVPL>' AND D_E_L_E_T_ = ' ';;;
+SF1;06;2;Contabilizar;4;CTBANFE()
+__REFRESH := .T.;;;;
+SF1FAT;01;2;Pesquisar;1;AxPesqui();;;;
+SF1FAT;02;2;Gerar Pedido de Vendas;4;MsAguarde({|| dbUseArea(.T.,"TOPCONN", TCGENQRY(,,U_ParserADV("SELECT COUNT(*) AS REGISTROS FROM (" + StrTran(AllTrim(M->PQ6_SQL), " ORDER BY D1_FORNECE, D1_DOC, D1_SERIE, D1_ITEM", "") + ") AS TAB")),"QRY",.F.,.T.)  },"Aguarde...","Contagem registros ...");;
+M->REGISTROS := QRY->REGISTROS;;
+QRY->(DbCloseArea());;
+If(M->REGISTROS == 0, MsgInfo("É obrigatório selecionar as notas para gerar o pedido de vendas !"), .F.);;
+__EXIT := M->REGISTROS == 0;;
+
+MsAguarde({|| dbUseArea(.T.,"TOPCONN", TCGENQRY(,,U_ParserADV(AllTrim(M->PQ6_GSQL))),"QRYPES",.F.,.T.)  },"Aguarde...","Totalizando peso ...");;
+M->PESO := QRYPES->PESO;;
+QRYPES->(DbCloseArea());;
+
+aRet := {};;
+aParam := {};;
+Aadd(aParam, {2,"Tipo",1,{"Normal", "Devolução"},80,'Pertence("ND")',.T.});;
+Aadd(aParam, {1,"Cliente",GetMv("ES_CLIEXP",,"000006"),"@!",'ExistCpo("SA1")','SA1','(Type("mv_par01")="N" .And. mv_par01=1) .or. (Type("mv_par01") = "C" .And. Left(mv_par01, 1)="N")',6,.F.});;
+Aadd(aParam, {1, "Loja",GetMv("ES_CLIEXP",,"01"),"@!",'ExistCpo("SA1",mv_par02+mv_par03)','','(Type("mv_par01")="N" .And. mv_par01=1) .or. (Type("mv_par01") = "C" .And. Left(mv_par01, 1)="N")',2,.F.});;
+Aadd(aParam, {1,"Fornecedor",Space(6),"@!",'ExistCpo("SA2")','SA2','(Type("mv_par01")="N" .And. mv_par01=2) .or. (Type("mv_par01") = "C" .And. Left(mv_par01, 1)="D")',6,.F.});;
+Aadd(aParam, {1, "Loja",Space(2),"@!",'ExistCpo("SA2",mv_par04+mv_par05)','','(Type("mv_par01")="N" .And. mv_par01=2) .or. (Type("mv_par01") = "C" .And. Left(mv_par01, 1)="D")',2,.F.});;
+Aadd(aParam, {1, "Condicao",GetMv("ES_CNDEXP",,"000"),"@!",'ExistCpo("SE4")','SE4','',3,.T.});;
+Aadd(aParam, {1, "TES",GetMv("ES_TESEXP",,"80B"),"@!",'ExistCpo("SF4")','SF4','',3,.T.});;
+Aadd(aParam, {1, "Peso Liquido",M->PESO,PesqPict("SC5","C5_PESOL"),'','','',80,.T.});;
+Aadd(aParam, {1, "Peso Bruto",M->PESO,PesqPict("SC5","C5_PBRUTO"),'','','',80,.T.});;
+Aadd(aParam, {1, "Especie 1",Left(GetMv("ES_ESPEXP",, "CAIXA") + Space(Len(SC5->C5_ESPECI1)), Len(SC5->C5_ESPECI1)),"@!",'','','',50,.T.});;
+Aadd(aParam, {1, "Volume 1",GetMv("ES_VOLEXP",, 1),"99999",'','','',5,.T.});;
+Aadd(aParam, {1, "Especie 2",Space(Len(SC5->C5_ESPECI2)),"@!",'','','',50,.F.});;
+Aadd(aParam, {1, "Volume 2",0,"99999",'','','',5,.F.});;
+Aadd(aParam, {1, "Especie 3",Space(Len(SC5->C5_ESPECI3)),"@!",'','','',50,.F.});;
+Aadd(aParam, {1, "Volume 3",0,"99999",'','','',5,.F.});;
+Aadd(aParam, {1, "Especie 4",Space(Len(SC5->C5_ESPECI4)),"@!",'','','',50,.F.});;
+Aadd(aParam, {1, "Volume 4",0,"99999",'','','',5,.F.});;
+Aadd(aParam, {1, "Mensagem para Nota",Left(GetMv("ES_MSGEXP",, "NAO INCIDENCIA DE ICMS CFE. ART. 7 INCISO V RICMS/00. REMESSA DE MERCADORIA PARA FORMACAO DE LOTE NO AEROPORTO DE GUARULHOS.") + Space(Len(SC5->C5_MENNOTA)), Len(SC5->C5_MENNOTA)),"@!",'.T.','','',200,.T.});;
+Aadd(aParam, {1, "Margem de Lucro",0,"999",'','','',7,.F.});;
+__EXIT := ! ParamBox(aParam, "Parametros da rotina",, {|| AllwaysTrue()},,,,,,, .F.);;
+
+MsAguarde({|| dbUseArea(.T.,"TOPCONN", TCGENQRY(,,U_ParserADV(AllTrim(M->PQ6_SQL))),"QRYSF1FAT",.F.,.T.)  },"Aguarde...","Selecionando registros ...");;
+
+aSC5 := {};;
+Aadd(aSC5, { "C5_TIPO", if((Type("mv_par01")="N" .And. mv_par01=1) .or. (Type("mv_par01") = "C" .And. Left(mv_par01, 1)="N"), "N", "D"), Nil });;
+Aadd(aSC5, { "C5_CLIENTE", if((Type("mv_par01")="N" .And. mv_par01=1) .or. (Type("mv_par01") = "C" .And. Left(mv_par01, 1)="N"), mv_par02, mv_par04), Nil });;
+Aadd(aSC5, { "C5_LOJA", if((Type("mv_par01")="N" .And. mv_par01=1) .or. (Type("mv_par01") = "C" .And. Left(mv_par01, 1)="N"), mv_par03, mv_par05), Nil });;
+Aadd(aSC5, { "C5_CONDPAG", mv_par06, Nil });;
+Aadd(aSC5, { "C5_PESOL", mv_par08, Nil });;
+Aadd(aSC5, { "C5_PBRUTO", mv_par09, Nil });;
+Aadd(aSC5, { "C5_ESPEC1", mv_par10, Nil });;
+Aadd(aSC5, { "C5_VOLUME1", mv_par11, Nil });;
+Aadd(aSC5, { "C5_ESPEC2", mv_par12, Nil });;
+Aadd(aSC5, { "C5_VOLUME2", mv_par13, Nil });;
+Aadd(aSC5, { "C5_ESPEC3", mv_par14, Nil });;
+Aadd(aSC5, { "C5_VOLUME3", mv_par15, Nil });;
+Aadd(aSC5, { "C5_ESPEC4", mv_par16, Nil });;
+Aadd(aSC5, { "C5_VOLUME4", mv_par17, Nil });;
+Aadd(aSC5, { "C5_MENNOTA", mv_par18, Nil });;
+
+cC6_ITEM := "01";;
+aSC6 := {};;
+MsAguarde({|| U_TRGWHILE("QRYSF1FAT", ALLTRIM(M->PQ6_GDVPL), {}) },"Aguarde...","Montando os itens do pedido ...");;
+QRYSF1FAT->(DbCloseArea());;
+
+MsAguarde({|| MsExecAuto( { | x, y | MATA410(x , y)}, aSC5, aSC6, 3) },"Aguarde...","Gerando o pedido de Vendas ...");;
+
+cErro := U_GetAutoErro();;
+If(! Empty(cErro), U_MostraErro("Erro na inclusão de pedido de venda", cErro), MsgInfo("Pedido de Venda [" + SC5->C5_NUM + "] gerado com sucesso !"));;;SELECT F1_DOC, F1_SERIE, D1_ITEM, D1_COD, D1_QUANT, D1_VUNIT, D1_XQTRIB, D1_XVUNTRB
+  FROM <ADVPL>RetSqlName("SF1")</ADVPL> SF1
+  JOIN <ADVPL>RetSqlName("SD1")</ADVPL> SD1 ON D1_FILIAL = F1_FILIAL AND D1_DOC = F1_DOC AND D1_SERIE = F1_SERIE AND D1_FORNECE = F1_FORNECE 
+   AND D1_LOJA = F1_LOJA AND SD1.D_E_L_E_T_ = ' '
+ WHERE F1_FILIAL = '<ADVPL>xFilial("SF1")</ADVPL>' AND F1_OK = '<ADVPL>aQuery[1][4]:cMark</ADVPL>' AND SF1.D_E_L_E_T_ = ' ' ORDER BY D1_FORNECE, D1_DOC, D1_SERIE, D1_ITEM;aAux := {};;
+Aadd(aAux, { "C6_ITEM", cC6_ITEM, Nil });;
+Aadd(aAux, { "C6_PRODUTO", QRYSF1FAT->D1_COD, Nil });;
+Aadd(aAux, { "C6_QTDVEN", QRYSF1FAT->D1_QUANT, Nil });;
+Aadd(aAux, { "C6_PRCVEN", QRYSF1FAT->D1_VUNIT + if(mv_par19 > 0, Round((QRYSF1FAT->D1_VUNIT * mv_par19) / 100, 2), 0), Nil });;
+Aadd(aAux, { "C6_TES", mv_par07, Nil });;
+Aadd(aAux, { "C6_NFORI", QRYSF1FAT->F1_DOC, Nil });;
+Aadd(aAux, { "C6_SERIORI", QRYSF1FAT->F1_SERIE, Nil });;
+Aadd(aAux, { "C6_ITEMORI", QRYSF1FAT->D1_ITEM, Nil });;
+Aadd(aAux, { "C6_XQTRIB", QRYSF1FAT->D1_XQTRIB, Nil });;
+Aadd(aAux, { "C6_XVUNTRB", QRYSF1FAT->D1_XVUNTRB, Nil });;
+cC6_ITEM := Soma1(cC6_ITEM);;
+Aadd(aSC6, AClone(aAux));;;SELECT SUM(D1_QUANT * B5_CONVDIP) AS PESO
+  FROM <ADVPL>RetSqlName("SF1")</ADVPL> SF1
+  JOIN <ADVPL>RetSqlName("SD1")</ADVPL> SD1 ON D1_FILIAL = F1_FILIAL AND D1_DOC = F1_DOC AND D1_SERIE = F1_SERIE AND D1_FORNECE = F1_FORNECE 
+   AND D1_LOJA = F1_LOJA AND SD1.D_E_L_E_T_ = ' '
+  JOIN <ADVPL>RetSqlName("SB5")</ADVPL> SB5 ON B5_FILIAL = F1_FILIAL AND B5_COD = D1_COD AND SB5.D_E_L_E_T_ = ' '
+ WHERE F1_FILIAL = '<ADVPL>xFilial("SF1")</ADVPL>' AND F1_OK = '<ADVPL>aQuery[1][4]:cMark</ADVPL>' AND SF1.D_E_L_E_T_ = ' ';
+SF1SE2;01;2;Pesquisar;0;Ax_pesquisa();;;;
+SF2;01;2;Pesquisar;1;AxPesqui();;;;
+SF2;02;2;Visualizar;2;SF2->(DbGoto((aQuery[1][2]:Alias())->(RECNO)))
+MC090Visual("SF2", SF2->(Recno()), 2);;;;
+SF2;03;2;Recontabilizar;4;SF2->(DbGoto((aQuery[1][2]:Alias())->(RECNO)))
+
+__EXIT  := If(Empty(SF2->F2_DTLANC), (MsgInfo("A nota [" + SF2->F2_DOC + "] ainda nao foi contabilizada !"), .T.), .F.)
+
+__EXIT := ! MsgYesNo("Confirma a limpeza da data de contabilização da nota [" + SF2->F2_DOC + "] ?")
+RecLock("SF2", .F.)
+SF2->F2_DTLANC := Ctod("")
+MsUnLock();;;;
+SFT;01;2;Pesquisar;1;AxPesqui();;;;
+SFT;02;2;Visualizar Item;2;SFT->(DbGoto((oCQuery:Alias())->(RECNO)))
+SFT->(AxVisual("SFT", SFT->(Recno()), 2));;;;
+SFT;03;2;Visualizar NF;2;If((oCQuery:Alias())->(FT_TIPOMOV) = "E", SF1->(DbGoto((oCQuery:Alias())->(F_RECNO))), SF2->(DbGoto((oCQuery:Alias())->(F_RECNO))))
+If((oCQuery:Alias())->(FT_TIPOMOV) = "E", A103NFiscal("SF1", SF1->(Recno()), 2), MC090Visual("SF2", SF2->(Recno()), 2));;;;
+SFT;04;2;Informar Nova TES;4;bRefresh := { || .T. }
+aFields  := If((oCQuery:Alias())->(FT_TIPOMOV) = "E", { "D1_DOC", "D1_SERIE", "D1_FORNECE", "D1_LOJA", "D1_ITEM", "D1_COD", "D1_QUANT", "D1_PRUNIT", "D1_TOTAL", "D1_TES", "D1_CF", "D1_XTES", "NOUSER" }, { "D2_DOC", "D2_SERIE", "D2_FORNECE", "D2_LOJA", "D2_ITEM", "D2_COD", "D2_QUANT", "D2_PRUNIT", "D2_TOTAL", "D2_TES", "D2_CF", "D2_XTES", "NOUSER" } )
+aEdit    := If((oCQuery:Alias())->(FT_TIPOMOV) = "E", { "D1_XTES" }, { "D2_XTES" })
+aParam   := { { || .T. }, { || U_VLDSFTTS() }, { || .T. }, { || __REFRESH := .T. } };;
+If((oCQuery:Alias())->(FT_TIPOMOV) = "E", SD1->(DbGoto((oCQuery:Alias())->(D_RECNO))), SD2->(DbGoto((oCQuery:Alias())->(D_RECNO))))
+AxAltera(If((oCQuery:Alias())->(FT_TIPOMOV) = "E", "SD1", "SD2"), If((oCQuery:Alias())->(FT_TIPOMOV) = "E", SD1->(Recno()), SD2->(Recno())), 4, aFields, aEdit, , , , , , , aParam);;;;
+SFT;05;2;Importar Nova TES;4;bImpCSV := { || U_XTESSFT() }
+cX3_ARQUIVO := oCQuery:Alias()
+cX3_FIELDS := "FT"
+cIX_INDICE := "2"
+U_ImpCSV()
+__REFRESH := .T.;;;;
+SFT;06;2;Reprocessar;4;U_RepNfTes();;;;
+SFTLIV;01;2;Pesquisar;1;AxPesqui();;;;
+SFTLIV;02;2;Visualizar;2;cCadastro:= oCQuery:cCadastro;;
+AxVisual("SFT", SFT->(Recno()),2);;;;
+SFTLIV;03;2;Alterar;4;cCadastro:= oCQuery:cCadastro;;
+AxAltera("SFT", SFT->(Recno()), 4);;;;
+SX5;01;2;Pesquisar;1;AxPesqui();;;;
+SX5ITE;01;2;Pesquisar;1;AxPesqui();;;;
+SX5ITE;02;2;Incluir;3;AxInclui("SX5", 0,3);;
+__REFRESH := .T.;;;;
+SX5ITE;03;2;Alterar;4;DbSelectArea("SX5");;
+DbGoto((aQuery[2][2]:cAlias)->(RECNO));;
+AxAltera("SX5", (aQuery[2][2]:cAlias)->(RECNO), 4);;;;
+SX5ITE;04;2;Excluir;5;DbSelectArea("SX5");;
+DbGoto((aQuery[2][2]:cAlias)->(RECNO));;
+AxDeleta("SX5", (aQuery[2][2]:cAlias)->(RECNO), 5);;
+__REFRESH := .T.;;;;
+SX6;01;2;Pesquisar;1;AxPesqui();;;;
+SX6;02;2;Visualizar;2;AxVisual("SX6", SX6->(Recno()), 2);;2;;
+SX6;03;2;Alterar;4;AxAltera("SX6", SX6->(Recno()), 4);;;;
+XMLSEF;01;2;Pesquisar;1;AxPesqui();;;;
+XMLSEF;02;2;Visualizar;2;AxVisual("SDS", SDS->(RECNO()), 2);;;;
+XMLSEF;03;2;Importar XMLs;3;U_XMLXImp();;;;
+XMLSEF;04;2;Gerar Pré-Nota;4;U_GerNfe(.F.);;;;
+XMLSEF;05;2;Gerar Documento de Entrada;4;U_GerNfe(.T.);;;;
+XMLSEF;06;2;Legenda;3;U_NfeXMLLeg();;;;
+XMLSEF;07;2;Exclusao;5;__EXIT := IF((aQuery[1][2]:cAlias)->DS_STATUS = "P", (MsgInfo("Atenção. Documento já foi gerado !"), .T.), .F.);;
+
+MsAguarde({|| U_ExecSQL(M->PQ6_SQL) },"Aguarde...","Deletando importação do XML");;
+
+__REFRESH := .T.;;;DELETE FROM <ADVPL>RetSqlName("SDT")</ADVPL> WHERE DT_FILIAL = '<ADVPL>(aQuery[1][2]:cAlias)->DS_FILIAL</ADVPL>'
+   AND DT_SERIE = '<ADVPL>(aQuery[1][2]:cAlias)->DS_SERIE</ADVPL>' AND DT_DOC = '<ADVPL>(aQuery[1][2]:cAlias)->DS_DOC</ADVPL>'
+   AND DT_FORNEC = '<ADVPL>(aQuery[1][2]:cAlias)->DS_FORNEC</ADVPL>' AND DT_LOJA = '<ADVPL>(aQuery[1][2]:cAlias)->DS_LOJA</ADVPL>';;
+DELETE FROM <ADVPL>RetSqlName("SDS")</ADVPL> WHERE R_E_C_N_O_ = <ADVPL>AllTrim(Str((aQuery[1][2]:cAlias)->(Recno())))</ADVPL>;;;;;
+XMLSFI;01;2;Pesquisar;2;AxPesqui();;;;
+XMLSFI;02;2;Visualizar;2;AxVisual("SDT", SDT->(RECNO()), 2);;;;
+XMLSFI;03;2;Alterar;4;aEdit := { "DT_COD", "DT_TES" };;
+AxAltera("SDT", SDT->(Recno()), 4, , aEdit);;;;
+XMLSFI;04;2;Legenda;3;COLLegIt();;;;
+ZPS;01;2;Pesquisar;1;AxPesqui();;;;
+ZPS;02;2;Visualizar;2;AxVisual("ZPS", ZPS->(Recno()),2);;;;
+ZPS;03;2;Incluir;3;cCadastro:= oCQuery:cCadastro
+AxInclui("ZPS", 0,3);;;;
+ZPS;04;2;Excluir;5;cCadastro:= oCQuery:cCadastro
+AxDeleta("ZPS", ZPS->(Recno()),5);;;;
+ZPS;05;2;Exclusao em Lote;5;U_MFATM011();;;;

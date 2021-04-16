@@ -1,0 +1,12 @@
+SA4;1;01;DB;Transportadora;Transportista;Carrier;SA4;
+SA4;2;01;01;Código;Codigo;Code;;
+SA4;2;02;02;Nome;Nombre;Name;;
+SA4;2;03;03;CNPJ;CNPJ;CNPJ;;
+SA4;3;01;01;Cadastra Novo;Registra Nuevo;Add New;01;
+SA4;4;01;01;Código;Codigo;Code;A4_COD;
+SA4;4;01;02;Nome;Nombre;Name;A4_NOME;
+SA4;4;02;01;Código;Codigo;Code;A4_COD;
+SA4;4;02;02;Nome;Nombre;Name;A4_NOME;
+SA4;4;03;01;CNPJ;CNPJ;CNPJ;A4_CGC;
+SA4;4;03;02;Nome;Nombre;Name;A4_NOME;
+SA4;5;01;;;;;SA4->A4_COD;

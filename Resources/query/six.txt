@@ -1,0 +1,12 @@
+PQ1;1;PQ1_FILIAL+PQ1_ID+PQ1_MODULO;Cod. ID+Modulo;Cod. ID+Modulo;Cod. ID+Modulo;U;;;S;;
+PQ1;2;PQ1_FILIAL+PQ1_NOME;Consulta;Consulta;Consulta;U;;;S;;
+PQ2;1;PQ2_FILIAL+PQ2_ID+PQ2_ORDEM+PQ2_NOME;Codigo ID+Ordem+Nome;Codigo ID+Ordem+Nome;Codigo ID+Ordem+Nome;U;;;S;;
+PQ2;2;PQ2_FILIAL+PQ2_ID+PQ2_NOME;Codigo ID+Nome Fisico;Codigo ID+Nome Fisico;Codigo ID+Nome Fisico;U;;;N;;
+PQ3;1;PQ3_FILIAL+PQ3_ID+PQ3_ORDEM+PQ3_CHAVE;Codigo ID+Ordem+Chave;Codigo ID+Ordem+Chave;Codigo ID+Ordem+Chave;U;;;S;;
+PQ4;1;PQ4_FILIAL+PQ4_ID+PQ4_ORDEM+PQ4_NOME;Codigo ID+Ordem+Nome;Codigo ID+Ordem+Nome;Codigo ID+Ordem+Nome;U;;;S;;
+PQ5;1;PQ5_FILIAL+PQ5_ID+PQ5_USERID+PQ5_NMPAR;Consulta+ID Usuario+Nm. Parametr;Consulta+ID Usuario+Nm. Parametr;Consulta+ID Usuario+Nm. Parametr;U;;;S;;
+PQ6;1;PQ6_FILIAL+PQ6_ID+PQ6_ORDEM;Consulta+Ordem;Consulta+Ordem;Consulta+Ordem;U;;;S;;
+PQ7;1;PQ7_FILIAL+PQ7_ID+PQ7_IDSUB;Consulta pai+Consul.Filha;Consulta pai+Consul.Filha;Consulta pai+Consul.Filha;U;;;S;;
+PQ8;1;PQ8_FILIAL+PQ8_ID+PQ8_GRUSER+PQ8_USER;Codigo ID+Grupo+Usuario;Codigo ID+Grupo+Usuario;Codigo ID+Grupo+Usuario;U;;;S;;
+PQ8;2;PQ8_FILIAL+PQ8_ID+PQ8_USER;Codigo ID+Cod. Usuario;Codigo ID+Cod. Usuario;Codigo ID+Cod. Usuario;U;;;S;;
+PQ9;1;PQ9_FILIAL+PQ9_ID+PQ9_USER;ID Consulta+Usuario;ID Consulta+Usuario;ID Consulta+Usuario;U;;;S;;

@@ -1,0 +1,12 @@
+SA3;1;01;DB;Vendedor;Vendedor;Sales Representative;SA3;
+SA3;2;01;01;Código;Codigo;Code;;
+SA3;2;02;02;Nome;Nombre;Name;;
+SA3;2;03;03;CNPJ;CNPJ;CNPJ;;
+SA3;3;01;01;Cadastra Novo;Registra Nuevo;Add New;01;
+SA3;4;01;01;Código;Codigo;Code;A3_COD;
+SA3;4;01;02;Nome;Nombre;Name;A3_NOME;
+SA3;4;02;01;Código;Codigo;Code;A3_COD;
+SA3;4;02;02;Nome;Nombre;Name;A3_NOME;
+SA3;4;03;01;CNPJ;CNPJ;CNPJ;A3_CGC;
+SA3;4;03;02;Nome;Nombre;Name;A3_NOME;
+SA3;5;01;;;;;SA3->A3_COD;
