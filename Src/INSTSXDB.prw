@@ -402,6 +402,7 @@ Rotina para atualização dos dicionários de dados
 Static Function Load_SX(cArqDbf, cAlias)
 
 Local bSeek := { || .F. }, nReg := 0
+Local aSX3  := {}
 
 	DbselectArea(cAlias)
 	If cAlias == "SX3"
@@ -418,6 +419,17 @@ Local bSeek := { || .F. }, nReg := 0
 		bSeek := { || ! SX2->(DbSeek(NEW->X2_CHAVE)) }
 	ElseIf cAlias == "SX3"	//-- Campos
 		bSeek := { || ! SX3->(DbSeek(NEW->X3_CAMPO)) }
+		// Campo Filial
+		SX3->(DbSeek("A1_FILIAL "))
+		Aadd(aSX3, { SX3->X3_RESERV, SX3->X3_USADO })
+
+		// Campo Obrigatorio
+		SX3->(DbSeek("A1_COD    "))
+		Aadd(aSX3, { SX3->X3_RESERV, SX3->X3_USADO })
+
+		// Campo Sem Obrigatoriedade
+		SX3->(DbSeek("A1_BAIRRO "))
+		Aadd(aSX3, { SX3->X3_RESERV, SX3->X3_USADO })
 	ElseIf cAlias == "SX5"	//-- Tabelas de Tabelas
 		bSeek := { || ! SX5->(DbSeek(NEW->(X5_FILIAL+X5_TABELA+X5_CHAVE) )) }
 	ElseIf cAlias == "SX6"	//-- Parametros
@@ -455,21 +467,15 @@ Local bSeek := { || .F. }, nReg := 0
 		
  		SaveReg(cAlias, "NEW", Eval(bSeek), .F.)
       	If cAlias == "SX3"
-		    // Troca para formato 27 com dicionario
-			SX3->X3_USADO := 	"x       x       x       x       x       x       x       x       x       x" +;
-								"       x       x       x       x       x"
-			If ! "_FILIAL" $ Upper(SX3->X3_CAMPO)
-				SX3->X3_USADO += "xx"
-			EndIf
-
-			// Obrigatorio
-			// "  x  xx"
-			// Não Obrigatorio
-			// "  x  x x"
-
-			SX3->X3_RESERV := "  x  x x"
-			If ! Empty(SX3->X3_OBRIGAT)
-				SX3->X3_RESERV := "  x  xx"
+			If "_FILIAL" $ SX3->X3_CAMPO
+				SX3->X3_RESERV := aSX3[1][1]
+				SX3->X3_USADO := aSX3[1][2]
+			ElseIf ! Empty(SX3->X3_OBRIGAT)
+				SX3->X3_RESERV := aSX3[2][1]
+				SX3->X3_USADO := aSX3[2][2]
+			Else
+				SX3->X3_RESERV := aSX3[3][1]
+				SX3->X3_USADO := aSX3[3][2]
 			EndIf
 
 			If ! Empty(SX3->X3_OBRIGAT)
