@@ -210,49 +210,9 @@ ElseIf Empty(__TABLES)
 Else
 	Set Filter to X3_ARQUIVO $ __TABLES .And. X3_PROPRI $ 'U,L'
 EndIf
+
 FileCopy(cFile)
 
-If File(cFile)
-	
-	dbUseArea(.T.,"CTREECDX", cFile, "SX3QRY",.F.)
-	 
-	DbGoTop()
-	While ! Eof()
-		//Verificacao se o campo x3_F3  está preenchido 
-		if ! Empty(X3_F3) 
-			If  At(X3_F3 + ";", cSXB) == 0 .And. SXB->(DbSeek(SX3QRY->X3_F3))
-				cSXB += X3_F3 + ";"
-			ElseIf At(X3_F3 + ";", cSX5) == 0 .And. SX5->(DbSeek(xFilial() + "00" + SX3QRY->X3_F3))
-				cSX5 += X3_F3 + ";"
-			EndIF
-		EndIF
-	
-		If  ! Empty(X3_GRPSXG) .And. AT(X3_GRPSXG + ";", cSXG) == 0 .And. X3_PROPRI = "U"
-			cSXG += X3_GRPSXG + ";"
-		endif
-		cX3_RESERV:=""
-		cX3_OBRIGAT:= ""
-		cX3_USADO:=  "x       x       x       x       x       x       x       x       x"+;
-						"       x       x       x       x       x       x       "
-        If ! "_FILIAL" $ Upper(SX3->X3_CAMPO)
-			cX3_RESERV:= "     xx "
-			cX3_OBRIGAT:=" "
-			cX3_USADO:= "x       x       x       x       x       x       x       x"+;
-			      		" x       x       x       x       x       x       x xx     "	
-		EndIf
-
-		SX3QRY-> (RecLock("SX3QRY", .F.))
-		SX3QRY->x3_reserv:= cX3_RESERV 
-		SX3QRY->X3_obrigat:= cX3_OBRIGAT
-		SX3QRY->X3_usado:= cX3_USADO
-		MsUnlock ()
-	
-		DbSkip()
-	EndDo
-	
-	SX3QRY->(DbCloseArea())
-	
-endif
 Return
 
 Static Function GerSX5(cF3)
@@ -449,6 +409,41 @@ If ! Empty(cFilter)
 Else
 	Copy To &(cFile)
 EndIf
+
+// Tratamento para exportação para 27 com dicionario
+If "sx3.dbf" $ cFile
+	dbUseArea(.T.,"CTREECDX", cFile, "SX3QRY",.F.)
+	 
+	DbGoTop()
+	While ! Eof()
+		//Verificacao se o campo x3_F3  está preenchido 
+		if ! Empty(X3_F3) 
+			If  At(X3_F3 + ";", cSXB) == 0 .And. SXB->(DbSeek(SX3QRY->X3_F3))
+				cSXB += X3_F3 + ";"
+			ElseIf At(X3_F3 + ";", cSX5) == 0 .And. SX5->(DbSeek(xFilial() + "00" + SX3QRY->X3_F3))
+				cSX5 += X3_F3 + ";"
+			EndIF
+		EndIF
+	
+		If  ! Empty(X3_GRPSXG) .And. AT(X3_GRPSXG + ";", cSXG) == 0 .And. X3_PROPRI = "U"
+			cSXG += X3_GRPSXG + ";"
+		endif
+		cX3_RESERV:=""
+		cX3_OBRIGAT:= If(! Empty(SX3QRY->X3_OBRIGAT), "X", "")
+		cX3_USADO:=  ""
+
+		SX3QRY-> (RecLock("SX3QRY", .F.))
+		SX3QRY->x3_reserv:= cX3_RESERV 
+		SX3QRY->X3_obrigat:= cX3_OBRIGAT
+		SX3QRY->X3_usado:= cX3_USADO
+		MsUnlock ()
+	
+		DbSkip()
+	EndDo
+	
+	SX3QRY->(DbCloseArea())
+	
+endif
 
 If lCpyLocal
 	cFileCpy := StrTran(Left(cFile, 6), "\query", "c:\temp\query") + Subs(cFile, 7)

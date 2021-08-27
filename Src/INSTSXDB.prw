@@ -454,6 +454,28 @@ Local bSeek := { || .F. }, nReg := 0
 		ConOut("Gravando [" + cAlias + "] - Registro: " + AllTrim(Str(nReg)))
 		
  		SaveReg(cAlias, "NEW", Eval(bSeek), .F.)
+      	If cAlias == "SX3"
+		    // Troca para formato 27 com dicionario
+			SX3->X3_USADO := 	"x       x       x       x       x       x       x       x       x       x" +;
+								"       x       x       x       x       x"
+			If ! "_FILIAL" $ Upper(SX3->X3_CAMPO)
+				SX3->X3_USADO += "xx"
+			EndIf
+
+			// Obrigatorio
+			// "  x  xx"
+			// Não Obrigatorio
+			// "  x  x x"
+
+			SX3->X3_RESERV := "  x  x x"
+			If ! Empty(SX3->X3_OBRIGAT)
+				SX3->X3_RESERV := "  x  xx"
+			EndIf
+
+			If ! Empty(SX3->X3_OBRIGAT)
+			    SX3->X3_OBRIGAT := ""
+			EndIf
+		EndIF
 
    		If cAlias == "SX2"
 	   		SX2->X2_ARQUIVO := AllTrim( NEW->X2_CHAVE ) + AllTrim( SM0->M0_CODIGO ) + "0"
